@@ -248,7 +248,7 @@ body.is-loading .mask > span, body.is-loading .fade-up, body.is-loading .stack__
   position: relative; border-radius: var(--radius); overflow: hidden; background: var(--surface);
   border: 1px solid var(--line); isolation: isolate;
 }
-.shot img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s var(--ease), filter .6s; filter: saturate(.92); }
+.shot img, .shot video { width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s var(--ease), filter .6s; filter: saturate(.92); }
 .shot::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.82)); z-index: 1; }
 .shot__info { position: absolute; left: 20px; right: 20px; bottom: 18px; z-index: 2; display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; }
 .shot__info small { display: block; font-size: 0.74rem; color: rgba(255, 255, 255, 0.65); margin-bottom: 4px; }
@@ -257,7 +257,7 @@ body.is-loading .mask > span, body.is-loading .fade-up, body.is-loading .stack__
   flex: none; width: 36px; height: 36px; border-radius: 50%; background: #fff; color: var(--ink);
   display: grid; place-items: center; transform: scale(.4); opacity: 0; transition: transform .45s var(--ease), opacity .3s;
 }
-.shot:hover img { transform: scale(1.06); filter: saturate(1); }
+.shot:hover img, .shot:hover video { transform: scale(1.06); filter: saturate(1); }
 .shot:hover .shot__go { transform: scale(1); opacity: 1; }
 .shot--big { grid-column: span 2; grid-row: span 2; }
 .shot--tall { grid-row: span 2; }
@@ -354,8 +354,11 @@ body.is-loading .mask > span, body.is-loading .fade-up, body.is-loading .stack__
 .entry__media--2 { grid-template-columns: 1fr 1fr; }
 .entry__media figure { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: var(--surface); aspect-ratio: 16 / 9; }
 .entry__media--2 figure { aspect-ratio: 4 / 3; }
-.entry__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
-.entry__media figure:hover img { transform: scale(1.03); }
+.entry__media--wide figure { aspect-ratio: 16 / 10; }
+.entry__media figure { position: relative; }
+.entry__media figcaption { position: absolute; left: 12px; bottom: 12px; font-size: 0.74rem; font-weight: 500; color: var(--text); background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 5px 11px; border-radius: 999px; }
+.entry__media img, .entry__media video { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.entry__media figure:hover img, .entry__media figure:hover video { transform: scale(1.03); }
 .entry__media .contain img { object-fit: contain; background: #c9c9c9; }
 .entry__body { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
 .entry__body h4 { font-size: 0.8rem; font-weight: 500; color: var(--faint); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
@@ -485,7 +488,7 @@ a.contact-line:hover .icon { background: var(--text); color: var(--ink); }
         </div>
         <div class="bento">
           <a class="shot shot--big reveal" href="#ev-chassis">
-            <img src="assets/img/chassis.jpg" alt="CAD render of Ashwin's semi spaceframe EV chassis" loading="lazy" width="1340" height="898" />
+            <video src="assets/video/chassis-fea.mp4" poster="assets/img/chassis-fea-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="FEA simulation of Ashwin's EV chassis flexing under load"></video>
             <div class="shot__info"><div><small>Published research</small><h3>Payload Responsive EV Chassis</h3></div><span class="shot__go">&#8599;</span></div>
           </a>
           <a class="shot shot--tall reveal" style="--d:.08s" href="#stratosat">
@@ -676,8 +679,9 @@ a.contact-line:hover .icon { background: var(--text); color: var(--ink); }
             </div>
             <span class="tag tag--accent">Published</span>
           </div>
-          <div class="entry__media reveal">
-            <figure><img src="assets/img/chassis.jpg" alt="CAD render of the semi spaceframe chassis" loading="lazy" width="1340" height="898" /></figure>
+          <div class="entry__media entry__media--2 entry__media--wide reveal">
+            <figure><img src="assets/img/chassis.jpg" alt="CAD render of the semi spaceframe chassis" loading="lazy" width="1340" height="898" /><figcaption>CAD model</figcaption></figure>
+            <figure><video src="assets/video/chassis-fea.mp4" poster="assets/img/chassis-fea-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="FEA simulation of the chassis flexing under a payload, coloured by stress"></video><figcaption>FEA under load</figcaption></figure>
           </div>
           <div class="entry__body reveal">
             <div>
@@ -1165,6 +1169,9 @@ if (!intro || seenIntro || reduceMotion) {
     setTimeout(() => intro.remove(), 1100);
   }, 1300);
 }
+
+// Respect reduced motion for looping videos
+if (reduceMotion) document.querySelectorAll("video[autoplay]").forEach((v) => { v.removeAttribute("autoplay"); v.pause(); });
 
 // Navigation: mobile toggle, scrolled state, sliding active pill
 const nav = document.querySelector(".nav");
