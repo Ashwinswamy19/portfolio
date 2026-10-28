@@ -5,33 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ashwin Swamy</title>
   <meta name="description" content="Ashwin Swamy, a student engineer in London working on EVs, aerospace and the economics behind them." />
+  <meta name="theme-color" content="#0a0a0a" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
   <style>
 /* =========================================================
    Ashwin Swamy Portfolio
-   Heading font: Space Grotesk  |  Body font: Inter
+   Body / headings: Inter  |  Accent words: Instrument Serif
    ========================================================= */
 
 :root {
   --bg: #0a0a0a;
-  --card: #171717;
-  --card-2: #1f1f1f;
-  --line: #2a2a2a;
-  --text: #f4f4f4;
-  --muted: #a1a1a1;
-  --lime: #e3f56c;
-  --lime-deep: #cfe348;
+  --surface: #111111;
+  --surface-2: #171717;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-2: rgba(255, 255, 255, 0.14);
+  --text: #ededed;
+  --muted: #8f8f8f;
+  --faint: #5c5c5c;
+  --accent: #d6f06a;
   --ink: #0a0a0a;
-  --paper: #f7f7f5;
 
-  --font-head: "Space Grotesk", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, sans-serif;
+  --font: "Inter", system-ui, -apple-system, sans-serif;
+  --serif: "Instrument Serif", Georgia, serif;
 
-  --radius: 24px;
-  --radius-sm: 16px;
-  --max: 1180px;
+  --radius: 22px;
+  --radius-sm: 14px;
+  --max: 1120px;
+  --ease: cubic-bezier(.22, 1, .36, 1);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -39,307 +41,395 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-body);
+  font-family: var(--font);
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
-h1, h2, h3, h4, .head { font-family: var(--font-head); line-height: 1.15; font-weight: 600; letter-spacing: -0.01em; }
+h1, h2, h3, h4 { line-height: 1.12; font-weight: 600; letter-spacing: -0.025em; }
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 ul { list-style: none; }
+em, .serif { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: 0; }
+::selection { background: var(--accent); color: var(--ink); }
 
-.container { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+.container { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+@media (max-width: 600px) { .container { padding: 0 16px; } }
+
+/* Soft background glow, kept very faint */
+body::before {
+  content: ""; position: fixed; inset: -20% -10% auto; height: 70vh; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse 50% 60% at 50% 0%, rgba(214, 240, 106, 0.05), transparent 70%);
+}
 
 /* ---------- Buttons & tags ---------- */
 .btn {
   display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--font-head); font-weight: 600; font-size: 0.95rem;
-  padding: 12px 22px; border-radius: 12px; transition: transform .2s, background .2s;
+  font-weight: 500; font-size: 0.92rem; line-height: 1;
+  padding: 13px 20px; border-radius: 999px; border: 1px solid transparent;
+  transition: transform .3s var(--ease), background .2s, border-color .2s, color .2s;
 }
 .btn:hover { transform: translateY(-2px); }
-.btn--lime { background: var(--lime); color: var(--ink); }
-.btn--white { background: var(--paper); color: var(--ink); }
-.btn--ghost { border: 1px solid var(--line); color: var(--text); }
-.btn--ghost:hover { border-color: var(--lime); color: var(--lime); }
+.btn .arrow { transition: transform .3s var(--ease); }
+.btn:hover .arrow { transform: translate(2px, -2px); }
+.btn--solid { background: var(--text); color: var(--ink); }
+.btn--solid:hover { background: #fff; }
+.btn--ghost { border-color: var(--line-2); color: var(--text); }
+.btn--ghost:hover { border-color: var(--text); }
 
 .tag {
   display: inline-block; font-size: 0.75rem; font-weight: 500;
-  padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted);
+  padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line-2); color: var(--muted);
 }
-.tag--lime { background: var(--lime); color: var(--ink); border-color: var(--lime); }
+.tag--accent { color: var(--accent); border-color: rgba(214, 240, 106, 0.3); }
 
-.eyebrow {
-  font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--lime); font-weight: 500;
-}
-.link-lime { color: var(--lime); font-family: var(--font-head); font-weight: 600; }
-.link-lime:hover { text-decoration: underline; }
+.eyebrow { font-size: 0.8rem; color: var(--muted); font-weight: 500; letter-spacing: 0.02em; display: inline-flex; align-items: center; gap: 10px; }
+.eyebrow::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
 
 /* ---------- Navigation ---------- */
 .nav {
-  position: sticky; top: 0; z-index: 50;
-  background: rgba(10, 10, 10, 0.82);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--line);
+  position: fixed; top: 16px; left: 0; right: 0; z-index: 50;
+  display: flex; justify-content: center; padding: 0 16px; pointer-events: none;
 }
-.nav__inner { display: flex; align-items: center; justify-content: space-between; height: 72px; }
-.nav__logo { display: flex; align-items: center; gap: 10px; font-family: var(--font-head); font-weight: 600; }
+.nav__bar {
+  pointer-events: auto;
+  display: flex; align-items: center; gap: 6px; width: 100%; max-width: var(--max);
+  padding: 8px 8px 8px 10px; border-radius: 999px;
+  background: rgba(17, 17, 17, 0.72); border: 1px solid var(--line);
+  backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%);
+  transition: background .3s, box-shadow .3s;
+  animation: navDrop .9s var(--ease) both;
+}
+.nav.is-scrolled .nav__bar { background: rgba(14, 14, 14, 0.88); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45); }
+@keyframes navDrop { from { transform: translateY(-30px); opacity: 0; } to { transform: none; opacity: 1; } }
+
+.nav__logo { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 0.95rem; padding-right: 8px; margin-right: auto; }
 .nav__mark {
-  width: 36px; height: 36px; border-radius: 10px; background: var(--lime); color: var(--ink);
-  display: grid; place-items: center; font-size: 0.9rem;
+  width: 34px; height: 34px; border-radius: 50%; background: var(--text); color: var(--ink);
+  display: grid; place-items: center; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.02em;
 }
-.nav__links { display: flex; align-items: center; gap: 4px; }
-.nav__links a:not(.btn) {
-  font-size: 0.92rem; color: var(--muted); padding: 8px 14px; border-radius: 10px; transition: color .2s, background .2s;
+.nav__links { position: relative; display: flex; align-items: center; gap: 2px; }
+.nav__links a {
+  position: relative; z-index: 1; font-size: 0.88rem; color: var(--muted);
+  padding: 9px 14px; border-radius: 999px; transition: color .25s;
 }
-.nav__links a:not(.btn):hover { color: var(--text); background: var(--card); }
-.nav__links a.is-active { color: var(--ink); background: var(--lime); }
-.nav__cta { margin-left: 10px; padding: 10px 18px; }
-.nav__toggle { display: none; background: none; border: 0; width: 40px; height: 40px; cursor: pointer; }
-.nav__toggle span { display: block; width: 22px; height: 2px; background: var(--text); margin: 6px auto; transition: transform .25s; }
-.nav.is-open .nav__toggle span:first-child { transform: translateY(4px) rotate(45deg); }
-.nav.is-open .nav__toggle span:last-child { transform: translateY(-4px) rotate(-45deg); }
+.nav__links a:hover { color: var(--text); }
+.nav__links a.is-active { color: var(--text); }
+.nav__pill {
+  position: absolute; top: 0; left: 0; height: 100%; border-radius: 999px; z-index: 0;
+  background: rgba(255, 255, 255, 0.08); opacity: 0;
+  transition: transform .45s var(--ease), width .45s var(--ease), opacity .3s;
+}
+.nav__cta { padding: 11px 18px; font-size: 0.86rem; margin-left: 6px; }
+.nav__links .nav__cv { display: none; }
+.nav__toggle { display: none; background: none; border: 0; width: 42px; height: 42px; cursor: pointer; border-radius: 50%; }
+.nav__toggle span { display: block; width: 18px; height: 1.5px; background: var(--text); margin: 5px auto; transition: transform .35s var(--ease); }
+.nav.is-open .nav__toggle span:first-child { transform: translateY(3.25px) rotate(45deg); }
+.nav.is-open .nav__toggle span:last-child { transform: translateY(-3.25px) rotate(-45deg); }
 
-@media (max-width: 960px) {
+@media (max-width: 1020px) {
   .nav__toggle { display: block; }
+  .nav__cta { display: none; }
+  .nav__bar { flex-wrap: wrap; border-radius: 26px; transition: border-radius .3s; }
   .nav__links {
-    position: absolute; top: 72px; left: 0; right: 0;
-    flex-direction: column; align-items: stretch; gap: 4px;
-    background: var(--bg); border-bottom: 1px solid var(--line); padding: 12px 20px 20px;
-    display: none;
+    order: 3; width: 100%; flex-direction: column; align-items: stretch; gap: 0;
+    max-height: 0; overflow: hidden; transition: max-height .5s var(--ease);
   }
-  .nav.is-open .nav__links { display: flex; }
-  .nav__cta { margin: 8px 0 0; justify-content: center; }
+  .nav.is-open .nav__links { max-height: 480px; }
+  .nav__links a { padding: 13px 10px; font-size: 1.05rem; border-top: 1px solid var(--line); border-radius: 0;
+    opacity: 0; transform: translateY(-8px); transition: opacity .3s, transform .4s var(--ease), color .2s; }
+  .nav.is-open .nav__links a { opacity: 1; transform: none; }
+  .nav.is-open .nav__links a:nth-child(2) { transition-delay: .03s; }
+  .nav.is-open .nav__links a:nth-child(3) { transition-delay: .06s; }
+  .nav.is-open .nav__links a:nth-child(4) { transition-delay: .09s; }
+  .nav.is-open .nav__links a:nth-child(5) { transition-delay: .12s; }
+  .nav.is-open .nav__links a:nth-child(6) { transition-delay: .15s; }
+  .nav.is-open .nav__links a:nth-child(7) { transition-delay: .18s; }
+  .nav.is-open .nav__links a:nth-child(8) { transition-delay: .21s; }
+  .nav__links a.is-active { color: var(--accent); }
+  .nav__links .nav__cv { display: block; }
+  .nav__pill { display: none; }
 }
 
-/* ---------- Decorative waves ---------- */
-.waves { position: absolute; top: 0; right: 0; width: 460px; height: 320px; pointer-events: none; opacity: .5; }
-.waves svg { width: 100%; height: 100%; }
-
-/* ---------- Image placeholders ---------- */
-.ph {
-  position: relative; width: 100%; aspect-ratio: var(--ar, 4 / 3);
-  border-radius: var(--radius-sm); border: 1.5px dashed #3a3a3a;
-  background: repeating-linear-gradient(135deg, #1a1a1a 0 12px, #1e1e1e 12px 24px);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
-  color: var(--muted); font-size: 0.8rem; text-align: center; padding: 16px; overflow: hidden;
+/* ---------- Intro curtain ---------- */
+.intro {
+  position: fixed; inset: 0; z-index: 100; background: var(--bg);
+  display: grid; place-items: center;
+  transition: transform 1s var(--ease);
 }
-.ph::before {
-  content: ""; width: 34px; height: 34px; opacity: .7;
-  background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e3f56c' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='3'/%3E%3Ccircle cx='9' cy='9' r='2'/%3E%3Cpath d='m21 15-4-4L5 21'/%3E%3C/svg%3E");
+.intro.is-done { transform: translateY(-100%); }
+.intro__name { font-size: clamp(2rem, 6vw, 4rem); font-weight: 600; letter-spacing: -0.04em; display: flex; overflow: hidden; }
+.intro__name span { display: inline-block; transform: translateY(110%); animation: lineUp .8s var(--ease) forwards; }
+.intro__name em { padding-left: .2em; }
+.intro__bar { position: absolute; bottom: 0; left: 0; height: 2px; background: var(--accent); animation: introBar 1.2s var(--ease) forwards; }
+@keyframes introBar { from { width: 0; } to { width: 100%; } }
+
+/* ---------- Generic motion ---------- */
+.mask { display: block; overflow: hidden; padding-bottom: 0.08em; }
+.mask > span { display: block; transform: translateY(105%); animation: lineUp 1s var(--ease) forwards; animation-delay: var(--d, 0s); }
+@keyframes lineUp { to { transform: none; } }
+.fade-up { opacity: 0; animation: fadeUp .9s var(--ease) forwards; animation-delay: var(--d, 0s); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+body.is-loading .mask > span, body.is-loading .fade-up, body.is-loading .stack__card, body.is-loading .nav__bar { animation-play-state: paused; }
+
+.reveal { opacity: 0; transform: translateY(28px) scale(.98); transition: opacity .9s var(--ease), transform .9s var(--ease); transition-delay: var(--d, 0s); }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* ---------- Home hero ---------- */
+.hero { padding-top: 150px; padding-bottom: 80px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; min-height: min(92vh, 900px); }
+.hero h1 { font-size: clamp(2.5rem, 5.6vw, 4.3rem); letter-spacing: -0.045em; line-height: 1.02; margin-top: 22px; }
+.hero h1 em { color: var(--text); }
+.hero__lead { color: var(--muted); font-size: 1.1rem; max-width: 46ch; margin-top: 26px; }
+.hero__actions { display: flex; gap: 10px; margin-top: 34px; flex-wrap: wrap; }
+.status { display: inline-flex; align-items: center; gap: 10px; font-size: 0.82rem; color: var(--muted); padding: 7px 14px 7px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+.status i { position: relative; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+.status i::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: var(--accent); animation: ping 2.4s ease-out infinite; }
+@keyframes ping { 0% { transform: scale(1); opacity: .6; } 80%, 100% { transform: scale(3); opacity: 0; } }
+
+/* Photo stack */
+.stack { position: relative; height: 500px; }
+.stack__card {
+  position: absolute; border-radius: 18px; overflow: hidden; background: var(--surface-2);
+  border: 1px solid var(--line-2); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55);
+  opacity: 0; transform: translateY(60px) scale(.85) rotate(0deg);
+  animation: popIn 1.1s var(--ease) forwards; animation-delay: var(--d);
+  transition: transform .6s var(--ease);
 }
-.ph span { font-weight: 500; color: var(--text); opacity: .8; }
-.ph small { font-size: 0.72rem; text-transform: uppercase; letter-spacing: .12em; opacity: .6; }
-.ph--lime { border-color: rgba(10,10,10,.35); background: repeating-linear-gradient(135deg, rgba(10,10,10,.06) 0 12px, rgba(10,10,10,.12) 12px 24px); color: var(--ink); }
-.ph--lime::before { filter: brightness(0); }
-.ph--lime span { color: var(--ink); }
-.ph--round { border-radius: 50%; }
-
-/* ---------- Cards ---------- */
-.card { background: var(--card); border-radius: var(--radius); padding: 28px; border: 1px solid #1f1f1f; }
-.card--outline { background: transparent; border: 1px solid #3a3a3a; }
-
-/* ---------- Home ---------- */
-.home { padding: 36px 0 70px; position: relative; }
-.home__title {
-  display: flex; align-items: center; justify-content: center; gap: 18px;
-  margin-bottom: 36px; position: relative; z-index: 1;
+.stack__card img { width: 100%; height: 100%; object-fit: cover; }
+.stack__card figcaption {
+  position: absolute; left: 10px; bottom: 10px; font-size: 0.72rem; font-weight: 500;
+  background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  padding: 5px 10px; border-radius: 999px; color: var(--text);
 }
-.home__title::before, .home__title::after { content: ""; flex: 1; max-width: 220px; height: 1px; background: linear-gradient(90deg, transparent, #5a5a5a); }
-.home__title::after { transform: scaleX(-1); }
-.home__title h1 { font-size: clamp(2rem, 4.5vw, 3rem); }
-
-.home__grid { display: grid; grid-template-columns: 360px 1fr; gap: 22px; position: relative; z-index: 1; }
-.home__left, .home__right { display: flex; flex-direction: column; gap: 22px; }
-
-.profile { position: relative; padding: 0; overflow: visible; background: linear-gradient(180deg, #202020, #141414); }
-.profile__photo { padding: 28px 28px 0; position: relative; }
-.profile__photo .ph { --ar: 1 / 1; max-width: 220px; margin: 0 auto; border-radius: 20px; }
-.sparkle { position: absolute; color: var(--text); }
-.sparkle--1 { top: 16px; left: 18px; width: 26px; }
-.sparkle--2 { top: 70px; left: 46px; width: 14px; color: #c7a6ff; }
-.sparkle--3 { top: 28px; right: 26px; width: 22px; }
-.hello {
-  position: relative; margin: -18px -10px 0; background: var(--lime); color: var(--ink);
-  border-radius: 20px; padding: 22px 26px 24px;
-}
-.hello h2 { font-size: 1.8rem; font-weight: 400; }
-.hello h2 strong { font-weight: 700; }
-.hello p { margin-top: 8px; font-size: 1rem; line-height: 1.45; position: relative; padding: 0 22px; }
-.hello p::before, .hello p::after { font-family: var(--font-head); font-size: 2.2rem; position: absolute; line-height: 1; font-weight: 700; }
-.hello p::before { content: "\201C"; left: -2px; top: -4px; }
-.hello p::after { content: "\201D"; right: 0; bottom: -18px; }
-
-.quick h3 { font-size: 1.05rem; margin-bottom: 8px; }
-.quick__block + .quick__block { margin-top: 20px; }
-.quick__row { display: flex; justify-content: space-between; gap: 12px; font-size: 0.9rem; color: var(--muted); }
-.quick__row b { color: var(--text); font-weight: 600; }
-.quick p { font-size: 0.9rem; color: var(--muted); }
-
-.folder { position: relative; padding-top: 30px; }
-.folder__tab {
-  position: absolute; top: -1px; right: -1px; background: var(--bg);
-  padding: 14px 28px 16px 30px; border-bottom-left-radius: 24px;
-}
-.folder__head { font-size: 1.25rem; margin-bottom: 22px; }
-.bento { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
-.tile { border-radius: 20px; padding: 22px; min-height: 180px; display: flex; flex-direction: column; justify-content: center; transition: transform .25s; }
-.tile:hover { transform: translateY(-4px); }
-.tile--white { background: var(--paper); color: var(--ink); }
-.tile--lime { background: var(--lime); color: var(--ink); }
-.tile--a { grid-column: span 2; text-align: center; align-items: center; }
-.tile--b { grid-column: span 3; }
-.tile--c { grid-column: span 3; }
-.tile--d { grid-column: span 2; text-align: center; }
-.tile h3 { font-size: 1.15rem; font-weight: 500; }
-.tile .big { font-family: var(--font-head); font-size: 1.9rem; font-weight: 700; line-height: 1; }
-.tile small { font-size: 0.78rem; opacity: .7; }
-.bolt { width: 18px; height: 18px; display: inline-block; vertical-align: -2px; color: #d7a600; }
-
-.meter { background: var(--paper); border-radius: 14px; padding: 16px 18px; }
-.meter__labels { display: flex; justify-content: space-between; align-items: center; font-family: var(--font-head); font-weight: 700; }
-.meter__labels span:nth-child(2) { font-family: var(--font-body); font-size: 0.7rem; font-weight: 400; opacity: .5; }
-.meter__labels span:last-child { color: #2c9a3a; }
-.meter__track { height: 8px; border-radius: 99px; background: #e5e5e5; margin-top: 14px; position: relative; }
-.meter__fill { position: absolute; inset: 0 22% 0 0; background: #3fb34f; border-radius: 99px; }
-.meter__knob { position: absolute; left: 78%; top: 50%; width: 20px; height: 20px; border-radius: 50%; background: #3fb34f; border: 4px solid #fff; transform: translate(-50%, -50%); box-shadow: 0 2px 6px rgba(0,0,0,.2); }
-
-
-.socials { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-.socials__icons { display: flex; gap: 14px; }
-.icon-btn {
-  width: 52px; height: 52px; border-radius: 14px; background: var(--card-2); display: grid; place-items: center;
-  color: var(--lime); transition: background .2s, transform .2s;
-}
-.icon-btn:hover { background: #2a2a2a; transform: translateY(-2px); }
-.icon-btn svg { width: 26px; height: 26px; }
+@keyframes popIn { to { opacity: 1; transform: translate(var(--x, 0), var(--y, 0)) rotate(var(--r)); } }
+.stack__card--1 { width: 230px; height: 300px; top: 20px; left: 2%; --r: -7deg; --d: .55s; }
+.stack__card--2 { width: 250px; height: 330px; top: 70px; right: 4%; --r: 6deg; --d: .7s; }
+.stack__card--3 { width: 320px; height: 214px; bottom: 10px; left: 16%; --r: -2deg; --d: .85s; z-index: 2; }
+.stack:hover .stack__card--1 { --x: -18px; --y: -10px; --r: -10deg; }
+.stack:hover .stack__card--2 { --x: 18px; --y: -8px; --r: 9deg; }
+.stack:hover .stack__card--3 { --y: 14px; --r: 0deg; }
+.stack.is-settled .stack__card { opacity: 1; animation: none; transform: translate(var(--x, 0), var(--y, 0)) rotate(var(--r)); }
 
 @media (max-width: 900px) {
-  .home__grid { grid-template-columns: 1fr; }
-  .profile, .quick { max-width: 520px; width: 100%; margin: 0 auto; }
+  .hero { grid-template-columns: 1fr; padding-top: 130px; min-height: 0; gap: 20px; }
+  .stack { height: 420px; max-width: 460px; width: 100%; margin: 0 auto; }
+  .stack__card--1 { width: 190px; height: 250px; }
+  .stack__card--2 { width: 200px; height: 266px; top: 50px; }
+  .stack__card--3 { width: 270px; height: 180px; left: 10%; }
 }
-@media (max-width: 600px) {
-  .bento { grid-template-columns: 1fr; }
-  .tile--a, .tile--b, .tile--c, .tile--d { grid-column: auto; }
-  .folder__tab { position: static; background: none; padding: 0 0 12px; }
-  .folder { padding-top: 24px; }
-  .card { padding: 22px; }
+@media (max-width: 420px) {
+  .stack { height: 360px; }
+  .stack__card--1 { width: 150px; height: 200px; }
+  .stack__card--2 { width: 160px; height: 214px; }
+  .stack__card--3 { width: 220px; height: 148px; left: 6%; }
 }
+
+/* ---------- Marquee ---------- */
+.marquee { border-block: 1px solid var(--line); overflow: hidden; padding: 20px 0; mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+.marquee__track { display: flex; width: max-content; animation: marquee 40s linear infinite; }
+.marquee:hover .marquee__track { animation-play-state: paused; }
+.marquee__track span { display: inline-flex; align-items: center; gap: 28px; padding-right: 28px; font-size: 1.05rem; color: var(--muted); white-space: nowrap; }
+.marquee__track span::after { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--faint); }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* ---------- Sections ---------- */
+.section { padding-top: 90px; padding-bottom: 90px; }
+.section--tight { padding-top: 50px; padding-bottom: 50px; }
+.section__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; margin-bottom: 36px; flex-wrap: wrap; }
+.section__head h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); letter-spacing: -0.035em; margin-top: 12px; }
+.section__head p { color: var(--muted); max-width: 40ch; }
+.text-link { color: var(--muted); font-size: 0.92rem; display: inline-flex; gap: 6px; align-items: center; transition: color .2s; }
+.text-link:hover { color: var(--text); }
+
+/* ---------- Bento of work ---------- */
+.bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 230px; gap: 14px; }
+.shot {
+  position: relative; border-radius: var(--radius); overflow: hidden; background: var(--surface);
+  border: 1px solid var(--line); isolation: isolate;
+}
+.shot img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s var(--ease), filter .6s; filter: saturate(.92); }
+.shot::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.82)); z-index: 1; }
+.shot__info { position: absolute; left: 20px; right: 20px; bottom: 18px; z-index: 2; display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; }
+.shot__info small { display: block; font-size: 0.74rem; color: rgba(255, 255, 255, 0.65); margin-bottom: 4px; }
+.shot__info h3 { font-size: 1.1rem; font-weight: 600; color: #fff; }
+.shot__go {
+  flex: none; width: 36px; height: 36px; border-radius: 50%; background: #fff; color: var(--ink);
+  display: grid; place-items: center; transform: scale(.4); opacity: 0; transition: transform .45s var(--ease), opacity .3s;
+}
+.shot:hover img { transform: scale(1.06); filter: saturate(1); }
+.shot:hover .shot__go { transform: scale(1); opacity: 1; }
+.shot--big { grid-column: span 2; grid-row: span 2; }
+.shot--tall { grid-row: span 2; }
+.shot--wide { grid-column: span 2; }
+.shot--light img { object-fit: contain; background: #c9c9c9; }
+@media (max-width: 900px) {
+  .bento { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 210px; }
+}
+@media (max-width: 560px) {
+  .bento { grid-template-columns: 1fr; grid-auto-rows: 260px; }
+  .shot--big, .shot--tall, .shot--wide { grid-column: auto; grid-row: auto; }
+  .shot__go { transform: none; opacity: 1; }
+}
+
+/* ---------- Numbers ---------- */
+.numbers { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.number { padding: 30px 26px; border-right: 1px solid var(--line); }
+.number:last-child { border-right: 0; }
+.number b { display: block; font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 600; letter-spacing: -0.04em; line-height: 1; }
+.number span { display: block; margin-top: 10px; font-size: 0.86rem; color: var(--muted); }
+@media (max-width: 800px) {
+  .numbers { grid-template-columns: 1fr 1fr; }
+  .number:nth-child(2) { border-right: 0; }
+  .number:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+}
+
+/* ---------- Feature list on home ---------- */
+.rows { border-top: 1px solid var(--line); }
+.row {
+  display: grid; grid-template-columns: 140px 1fr auto; gap: 24px; align-items: center;
+  padding: 26px 4px; border-bottom: 1px solid var(--line); transition: padding .4s var(--ease);
+}
+.row:hover { padding-left: 14px; }
+.row__year { color: var(--faint); font-size: 0.86rem; }
+.row h3 { font-size: 1.2rem; font-weight: 500; }
+.row p { color: var(--muted); font-size: 0.92rem; margin-top: 2px; }
+.row__arrow { color: var(--faint); transition: color .3s, transform .4s var(--ease); }
+.row:hover .row__arrow { color: var(--text); transform: translate(3px, -3px); }
+@media (max-width: 640px) { .row { grid-template-columns: 1fr auto; } .row__year { grid-column: 1 / -1; margin-bottom: -16px; } }
+
+/* ---------- CTA ---------- */
+.cta {
+  position: relative; overflow: hidden; border-radius: 28px; border: 1px solid var(--line);
+  background: var(--surface); padding: clamp(40px, 7vw, 80px); text-align: center;
+}
+.cta::before { content: ""; position: absolute; inset: auto 0 -60% 0; height: 100%; background: radial-gradient(ellipse 50% 50% at 50% 50%, rgba(214, 240, 106, 0.07), transparent 70%); pointer-events: none; }
+.cta h2 { font-size: clamp(2rem, 5vw, 3.6rem); letter-spacing: -0.04em; position: relative; }
+.cta p { color: var(--muted); margin: 16px auto 30px; max-width: 46ch; position: relative; }
+.cta .hero__actions { justify-content: center; position: relative; margin-top: 0; }
 
 /* ---------- Sub page hero ---------- */
-.page-hero { position: relative; padding: 80px 20px 50px; }
-.page-hero h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); max-width: 16ch; margin-top: 14px; position: relative; z-index: 1; }
-.page-hero h1 em { font-style: normal; color: var(--lime); }
-.lead { color: var(--muted); font-size: 1.1rem; max-width: 62ch; margin-top: 18px; position: relative; z-index: 1; }
+.page-hero { padding-top: 170px; padding-bottom: 50px; }
+.page-hero h1 { font-size: clamp(2.5rem, 6vw, 4.6rem); letter-spacing: -0.045em; line-height: 1.03; margin-top: 22px; max-width: 16ch; }
+.lead { color: var(--muted); font-size: 1.1rem; max-width: 58ch; margin-top: 24px; }
+.jump { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 30px; }
+.jump .btn { padding: 10px 16px; font-size: 0.86rem; }
 
-.section { padding: 30px 0 60px; }
-.section__title { font-size: 1.6rem; margin-bottom: 22px; display: flex; align-items: center; gap: 12px; }
-.section__title::before { content: ""; width: 10px; height: 10px; border-radius: 3px; background: var(--lime); }
-
-.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+/* ---------- Cards ---------- */
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px; }
+.card h3 { font-size: 1.2rem; }
+.card > p { color: var(--muted); margin-top: 8px; }
+.meta { font-size: 0.86rem; color: var(--muted); margin-top: 6px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 @media (max-width: 900px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .card { padding: 22px; } }
 
-.card h3 { font-size: 1.25rem; }
-.card p { color: var(--muted); }
-.card p + p { margin-top: 12px; }
-.meta { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
-
-.list { display: grid; gap: 10px; margin-top: 14px; }
+.list { display: grid; gap: 10px; margin-top: 16px; }
 .list li { position: relative; padding-left: 20px; color: var(--muted); }
-.list li::before { content: ""; position: absolute; left: 0; top: 10px; width: 8px; height: 8px; border-radius: 2px; background: var(--lime); }
+.list li::before { content: ""; position: absolute; left: 2px; top: 10px; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 
-.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.kv { margin-top: 16px; }
+.kv div { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 13px 0; border-bottom: 1px solid var(--line); }
+.kv div:last-child { border-bottom: 0; }
+.kv b { font-weight: 500; }
+.kv span { color: var(--muted); font-size: 0.92rem; text-align: right; }
+.kv .hl { color: var(--text); font-weight: 600; }
 
-/* ---------- About ---------- */
+/* Photo cards (beyond the lab) */
+.pcard { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+.pcard__img { aspect-ratio: 4 / 3; overflow: hidden; }
+.pcard__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.1s var(--ease); }
+.pcard:hover .pcard__img img { transform: scale(1.05); }
+.pcard__body { padding: 24px 26px 28px; }
+.pcard__body p { color: var(--muted); margin-top: 8px; font-size: 0.95rem; }
 
-.edu-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
-.edu-row:last-child { border-bottom: 0; }
-.edu-row b { font-family: var(--font-head); font-weight: 600; }
-.edu-row span { color: var(--muted); font-size: 0.92rem; text-align: right; }
-.edu-row .hl { color: var(--lime); font-family: var(--font-head); font-weight: 700; }
-
-.interest { display: flex; flex-direction: column; gap: 14px; }
-
-/* ---------- Stats ---------- */
-.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
-.stat { background: var(--card-2); border-radius: var(--radius-sm); padding: 18px 20px; }
-.stat b { display: block; font-family: var(--font-head); font-size: 1.9rem; color: var(--lime); line-height: 1.1; }
-.stat span { font-size: 0.85rem; color: var(--muted); }
-
-/* ---------- Projects / long form entries ---------- */
-.entry { display: grid; gap: 26px; }
-.entry + .entry { margin-top: 28px; }
+/* ---------- Long form entries ---------- */
+.entry { display: grid; gap: 30px; padding: 0 0 70px; scroll-margin-top: 110px; }
+.entry + .entry { border-top: 1px solid var(--line); padding-top: 70px; }
 .entry__head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
-.entry__head h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-top: 8px; }
-.entry__media { display: grid; grid-template-columns: 1.6fr 1fr; gap: 14px; }
-.entry__media .ph:first-child { --ar: 16 / 10; }
-.entry__media .ph:last-child { --ar: auto; height: 100%; }
-.entry__media--single { grid-template-columns: 1fr; }
-.entry__media--single .ph:first-child { --ar: 21 / 9; height: auto; }
-.entry__body { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
-.entry__body h4 { font-size: 1rem; color: var(--text); margin-bottom: 8px; }
-.entry__body p { color: var(--muted); font-size: 0.95rem; }
+.entry__head h2 { font-size: clamp(1.7rem, 3.4vw, 2.5rem); letter-spacing: -0.035em; margin-top: 12px; }
+.entry__media { display: grid; gap: 14px; grid-template-columns: 1fr; }
+.entry__media--2 { grid-template-columns: 1fr 1fr; }
+.entry__media figure { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: var(--surface); aspect-ratio: 16 / 9; }
+.entry__media--2 figure { aspect-ratio: 4 / 3; }
+.entry__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.entry__media figure:hover img { transform: scale(1.03); }
+.entry__media .contain img { object-fit: contain; background: #c9c9c9; }
+.entry__body { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+.entry__body h4 { font-size: 0.8rem; font-weight: 500; color: var(--faint); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+.entry__body p { color: var(--muted); font-size: 0.97rem; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 18px 20px; }
+.stat b { display: block; font-size: 1.7rem; font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; }
+.stat span { font-size: 0.84rem; color: var(--muted); }
 @media (max-width: 800px) {
-  .entry__media, .entry__body { grid-template-columns: 1fr; }
-  .entry__media .ph:last-child { --ar: 16 / 10; height: auto; }
+  .entry__body, .entry__media--2 { grid-template-columns: 1fr; }
+  .entry__body { gap: 20px; }
 }
 
-.jump { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; position: relative; z-index: 1; }
+/* ---------- Timeline (experience) ---------- */
+.timeline { position: relative; }
 
 /* ---------- Awards ---------- */
-.award { display: grid; grid-template-columns: 90px 1fr auto; gap: 18px; align-items: center; padding: 20px 24px; border-radius: var(--radius-sm); background: var(--card); border: 1px solid #1f1f1f; transition: border-color .2s; }
-.award:hover { border-color: var(--lime); }
-.award + .award { margin-top: 12px; }
-.award__year { font-family: var(--font-head); font-size: 1.4rem; font-weight: 700; color: var(--lime); }
-.award h3 { font-size: 1.1rem; }
+.award { display: grid; grid-template-columns: 90px 1fr auto; gap: 20px; align-items: center; padding: 22px 4px; border-bottom: 1px solid var(--line); transition: padding .4s var(--ease); }
+.award:first-child { border-top: 1px solid var(--line); }
+.award:hover { padding-left: 14px; }
+.award__year { color: var(--faint); font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+.award h3 { font-size: 1.1rem; font-weight: 500; }
 .award p { color: var(--muted); font-size: 0.92rem; }
-@media (max-width: 640px) { .award { grid-template-columns: 1fr; gap: 6px; } }
+@media (max-width: 640px) { .award { grid-template-columns: 1fr; gap: 4px; } }
 
 /* ---------- Contact ---------- */
-.contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 22px; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 14px; }
 @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; } }
 .contact-line { display: flex; align-items: center; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--line); }
-.contact-line:last-child { border-bottom: 0; }
-.contact-line .icon-btn { width: 44px; height: 44px; flex: none; }
-.contact-line .icon-btn svg { width: 22px; height: 22px; }
-.contact-line small { display: block; color: var(--muted); font-size: 0.8rem; }
-.form { display: grid; gap: 14px; }
-.form label { font-size: 0.85rem; color: var(--muted); display: grid; gap: 6px; }
+.contact-line:last-of-type { border-bottom: 0; }
+.contact-line small { display: block; color: var(--muted); font-size: 0.78rem; }
+.icon { width: 42px; height: 42px; flex: none; border-radius: 50%; border: 1px solid var(--line-2); display: grid; place-items: center; color: var(--text); transition: background .2s, color .2s; }
+.icon svg { width: 18px; height: 18px; }
+a.contact-line:hover .icon { background: var(--text); color: var(--ink); }
+.form { display: grid; gap: 14px; margin-top: 18px; }
+.form label { font-size: 0.85rem; color: var(--muted); display: grid; gap: 8px; }
 .form input, .form textarea {
-  font-family: var(--font-body); font-size: 1rem; color: var(--text);
-  background: var(--card-2); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; outline: none; resize: vertical;
+  font-family: var(--font); font-size: 1rem; color: var(--text);
+  background: var(--bg); border: 1px solid var(--line-2); border-radius: 12px; padding: 14px 16px; outline: none; resize: vertical;
+  transition: border-color .2s;
 }
-.form input:focus, .form textarea:focus { border-color: var(--lime); }
-.form button { border: 0; cursor: pointer; justify-self: start; }
+.form input:focus, .form textarea:focus { border-color: var(--text); }
+.form button { cursor: pointer; justify-self: start; font-family: var(--font); }
 
-/* ---------- CTA band & footer ---------- */
-.cta-band { background: var(--lime); color: var(--ink); border-radius: var(--radius); padding: 40px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
-.cta-band h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); max-width: 20ch; }
-.cta-band .btn { background: var(--ink); color: var(--lime); }
+/* ---------- Footer ---------- */
+.footer { border-top: 1px solid var(--line); padding: 34px 0; margin-top: 40px; }
+.footer__inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; color: var(--muted); font-size: 0.86rem; }
+.footer__links { display: flex; gap: 20px; flex-wrap: wrap; }
+.footer__links a:hover { color: var(--text); }
 
-.footer { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
-.footer__inner { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; color: var(--muted); font-size: 0.88rem; }
-.footer__links { display: flex; gap: 18px; flex-wrap: wrap; }
-.footer__links a:hover { color: var(--lime); }
-
-/* ---------- Reveal on scroll ---------- */
-.reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
-.reveal.is-visible { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
-
+/* ---------- Views ---------- */
 .view[hidden] { display: none; }
-.view > .page-hero, .view > .home { scroll-margin-top: 80px; }
-.entry { scroll-margin-top: 90px; }
+.view { animation: viewIn .7s var(--ease); }
+@keyframes viewIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; transition-duration: .01ms !important; }
+  .reveal { opacity: 1; transform: none; }
+  .intro { display: none; }
+  html { scroll-behavior: auto; }
+}
   </style>
 </head>
-<body>
+<body class="is-loading">
+  <div class="intro" aria-hidden="true">
+    <div class="intro__name"><span>Ashwin</span><span style="animation-delay:.12s"><em>Swamy</em></span></div>
+    <div class="intro__bar"></div>
+  </div>
+
   <header class="nav">
-    <div class="nav__inner container">
+    <div class="nav__bar">
       <a class="nav__logo" href="#home"><span class="nav__mark">AS</span><span>Ashwin Swamy</span></a>
-      <button class="nav__toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
-      <nav class="nav__links">
+      <nav class="nav__links" aria-label="Main">
+        <span class="nav__pill" aria-hidden="true"></span>
         <a href="#home" data-nav="home">Home</a>
         <a href="#about" data-nav="about">About</a>
         <a href="#projects" data-nav="projects">Projects</a>
@@ -347,592 +437,694 @@ ul { list-style: none; }
         <a href="#leadership" data-nav="leadership">Leadership</a>
         <a href="#awards" data-nav="awards">Awards</a>
         <a href="#contact" data-nav="contact">Contact</a>
-        <a class="btn btn--lime nav__cta" href="assets/Ashwin-Swamy-CV.pdf" target="_blank" rel="noopener">Resume &#8599;</a>
+        <a class="nav__cv" href="assets/Ashwin-Swamy-CV.pdf" target="_blank" rel="noopener">Resume &#8599;</a>
       </nav>
+      <a class="btn btn--solid nav__cta" href="assets/Ashwin-Swamy-CV.pdf" target="_blank" rel="noopener">Resume <span class="arrow">&#8599;</span></a>
+      <button class="nav__toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
     </div>
   </header>
 
   <main>
+    <!-- ======================= HOME ======================= -->
     <div class="view" id="home" data-title="Ashwin Swamy">
-    <section class="home container">
-      <div class="waves" aria-hidden="true"></div>
-      <div class="home__title"><h1>Ashwin Swamy</h1></div>
-
-      <div class="home__grid">
-        <div class="home__left">
-          <div class="card profile reveal">
-            <div class="profile__photo">
-              <span class="sparkle sparkle--1"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c.6 6.4 5.6 11.4 12 12-6.4.6-11.4 5.6-12 12-.6-6.4-5.6-11.4-12-12C6.4 11.4 11.4 6.4 12 0z"/></svg></span>
-              <span class="sparkle sparkle--2"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c.6 6.4 5.6 11.4 12 12-6.4.6-11.4 5.6-12 12-.6-6.4-5.6-11.4-12-12C6.4 11.4 11.4 6.4 12 0z"/></svg></span>
-              <span class="sparkle sparkle--3"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c.6 6.4 5.6 11.4 12 12-6.4.6-11.4 5.6-12 12-.6-6.4-5.6-11.4-12-12C6.4 11.4 11.4 6.4 12 0z"/></svg></span>
-              <div class="ph "><span>Headshot of Ashwin</span><small>Photo placeholder</small></div>
-            </div>
-            <div class="hello">
-              <h2>Hello, I'm <strong>Ashwin</strong></h2>
-              <p>I'm an engineer who builds things that have to work in the real world.</p>
-            </div>
-          </div>
-
-          <div class="card quick reveal">
-            <div class="quick__block">
-              <h3>Education</h3>
-              <div class="quick__row"><span>King's College School, Wimbledon</span><span>2022 to Now</span></div>
-              <div class="quick__row"><span>IB Diploma (Predicted)</span><b>45 / 45</b></div>
-            </div>
-            <div class="quick__block">
-              <h3>Engineering Skills</h3>
-              <p>CAD and FEA in Fusion 360, Python, JavaScript, HTML</p>
-            </div>
-            <div class="quick__block">
-              <h3>Beyond the Lab</h3>
-              <p>Taekwondo, music production, rock band, F1</p>
-            </div>
+      <section class="hero container">
+        <div>
+          <span class="status fade-up" style="--d:.3s"><i></i>Year 13 at King's College School, Wimbledon</span>
+          <h1>
+            <span class="mask"><span style="--d:.4s">Hi, I'm Ashwin.</span></span>
+            <span class="mask"><span style="--d:.52s">I build things that</span></span>
+            <span class="mask"><span style="--d:.64s">have to <em>work for real.</em></span></span>
+          </h1>
+          <p class="hero__lead fade-up" style="--d:.85s">A student engineer in London working on EV chassis, CanSats and race cars, and curious about the economics that decide what gets built.</p>
+          <div class="hero__actions fade-up" style="--d:1s">
+            <a class="btn btn--solid" href="#projects">See my work <span class="arrow">&#8599;</span></a>
+            <a class="btn btn--ghost" href="#contact">Get in touch</a>
           </div>
         </div>
+        <div class="stack" aria-label="Photos of Ashwin">
+          <figure class="stack__card stack__card--1"><img src="assets/img/regent.jpg" alt="Ashwin walking into the REGENT sea glider hangar" width="1050" height="1400" /><figcaption>REGENT, Rhode Island</figcaption></figure>
+          <figure class="stack__card stack__card--2"><img src="assets/img/ignite.jpg" alt="Ashwin on stage hosting an IGNITE session with a BP speaker" width="1050" height="1400" /><figcaption>Hosting IGNITE</figcaption></figure>
+          <figure class="stack__card stack__card--3"><img src="assets/img/taekwondo-1.jpg" alt="Ashwin performing a kick at the British Taekwondo Nationals" width="1600" height="1067" /><figcaption>Taekwondo Nationals</figcaption></figure>
+        </div>
+      </section>
 
-        <div class="home__right">
-          <div class="card folder reveal">
-            <div class="folder__tab"><a class="link-lime" href="#projects">View Projects &#8599;</a></div>
-            <h2 class="folder__head">Featured Work</h2>
-            <div class="bento">
-              <a class="tile tile--white tile--a" href="#ev-chassis">
-                <h3>Designing an EV chassis that adapts to its payload <svg class="bolt" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></h3>
-              </a>
-              <a class="tile tile--lime tile--b" href="#ev-chassis">
-                <div class="meter">
-                  <div class="meter__labels"><span>1.0&times;</span><span>SAFETY FACTOR</span><span>4.6&times;</span></div>
-                  <div class="meter__track"><div class="meter__fill"></div><div class="meter__knob"></div></div>
-                </div>
-                <small style="margin-top:12px">Stronger than a ladder frame baseline</small>
-              </a>
-              <a class="tile tile--lime tile--c" href="#stratosat">
-                <div>
-                  <p class="big">100%</p>
-                  <small>Preliminary design review score as Project Manager of StratoSat</small>
-                </div>
-              </a>
-              <a class="tile tile--white tile--d" href="#economics">
-                <small>John Locke 2026</small>
-                <h3 style="margin-top:6px">Shortlisted for Economics</h3>
-                <small style="margin-top:6px">My research on who controls a cashless economy</small>
-              </a>
-            </div>
-          </div>
-
-          <div class="card card--outline socials reveal">
-            <div class="socials__icons">
-              <a class="icon-btn" href="#" aria-label="LinkedIn (add link)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 11v5M8 8v.01M12 16v-5M16 16v-3a2 2 0 0 0-4 0"/></svg></a>
-              <a class="icon-btn" href="mailto:Swamy-A-22@kcs.org.uk" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m3 7 9 6 9-6"/></svg></a>
-              <a class="icon-btn" href="#" aria-label="Instagram (add link)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5v.01"/></svg></a>
-              <a class="icon-btn" href="#" aria-label="My music (add link)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></a>
-            </div>
-            <a class="btn btn--white" href="assets/Ashwin-Swamy-CV.pdf" target="_blank" rel="noopener">Resume &#8599;</a>
-          </div>
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee__track">
+          <span>CAD &amp; FEA</span><span>EV chassis design</span><span>Aerodynamics</span><span>Recovery systems</span><span>Python</span><span>Platform economics</span><span>2nd Dan black belt</span><span>Grade 7 piano</span><span>Rock band</span><span>Formula 1</span>
+          <span>CAD &amp; FEA</span><span>EV chassis design</span><span>Aerodynamics</span><span>Recovery systems</span><span>Python</span><span>Platform economics</span><span>2nd Dan black belt</span><span>Grade 7 piano</span><span>Rock band</span><span>Formula 1</span>
         </div>
       </div>
-    </section>
+
+      <section class="section container">
+        <div class="section__head reveal">
+          <div>
+            <p class="eyebrow">Selected work</p>
+            <h2>Things I've <em>designed and built.</em></h2>
+          </div>
+          <a class="text-link" href="#projects">All projects &#8599;</a>
+        </div>
+        <div class="bento">
+          <a class="shot shot--big reveal" href="#ev-chassis">
+            <img src="assets/img/chassis.jpg" alt="CAD render of Ashwin's semi spaceframe EV chassis" loading="lazy" width="1340" height="898" />
+            <div class="shot__info"><div><small>Published research</small><h3>Payload Responsive EV Chassis</h3></div><span class="shot__go">&#8599;</span></div>
+          </a>
+          <a class="shot shot--tall reveal" style="--d:.08s" href="#stratosat">
+            <img src="assets/img/cansat-parachute.jpg" alt="Cutting the canopy for the StratoSat recovery parachute" loading="lazy" width="1050" height="1400" />
+            <div class="shot__info"><div><small>UK CanSat</small><h3>StratoSat</h3></div><span class="shot__go">&#8599;</span></div>
+          </a>
+          <a class="shot shot--tall reveal" style="--d:.16s" href="#leadership">
+            <img src="assets/img/ignite.jpg" alt="IGNITE session in the school hall" loading="lazy" width="1050" height="1400" />
+            <div class="shot__info"><div><small>Founder</small><h3>IGNITE Initiative</h3></div><span class="shot__go">&#8599;</span></div>
+          </a>
+          <a class="shot shot--wide shot--light reveal" href="#f1inschools">
+            <img src="assets/img/f1-car.jpg" alt="The Orca Racing F1 in Schools car" loading="lazy" width="1454" height="664" />
+            <div class="shot__info"><div><small>Team Leader</small><h3>F1 in Schools: Orca Racing</h3></div><span class="shot__go">&#8599;</span></div>
+          </a>
+          <a class="shot reveal" style="--d:.08s" href="#experience">
+            <img src="assets/img/regent.jpg" alt="REGENT sea glider hangar" loading="lazy" width="1050" height="1400" />
+            <div class="shot__info"><div><small>Work experience</small><h3>REGENT</h3></div><span class="shot__go">&#8599;</span></div>
+          </a>
+          <a class="shot reveal" style="--d:.16s" href="#leadership">
+            <img src="assets/img/cricket4life.jpg" alt="Cricket4Life kit donation" loading="lazy" width="1050" height="1400" style="object-position:center 30%" />
+            <div class="shot__info"><div><small>Co-Founder</small><h3>Cricket4Life</h3></div><span class="shot__go">&#8599;</span></div>
+          </a>
+        </div>
+      </section>
+
+      <section class="section--tight container">
+        <div class="numbers reveal">
+          <div class="number"><b data-count="4.6" data-decimals="1" data-suffix="&times;">4.6&times;</b><span>Higher chassis safety factor</span></div>
+          <div class="number"><b data-count="100" data-suffix="+">100+</b><span>FEA iterations run</span></div>
+          <div class="number"><b data-count="11">11</b><span>Grade 9 (I)GCSEs</span></div>
+          <div class="number"><b data-count="1550">1550</b><span>SAT score</span></div>
+        </div>
+      </section>
+
+      <section class="section container">
+        <div class="section__head reveal">
+          <div>
+            <p class="eyebrow">Recently</p>
+            <h2>What I've been <em>up to.</em></h2>
+          </div>
+          <a class="text-link" href="#experience">Experience &#8599;</a>
+        </div>
+        <div class="rows">
+          <a class="row reveal" href="#experience"><span class="row__year">July 2026</span><div><h3>Tech Mahindra</h3><p>Platform economics client project for Bentley Motors</p></div><span class="row__arrow">&#8599;</span></a>
+          <a class="row reveal" href="#ev-chassis"><span class="row__year">2026</span><div><h3>Published in the National High School Journal of Science</h3><p>My EV chassis research, also presented at Sigma Xi</p></div><span class="row__arrow">&#8599;</span></a>
+          <a class="row reveal" href="#economics"><span class="row__year">2026</span><div><h3>John Locke Essay Competition</h3><p>Commendation in Economics</p></div><span class="row__arrow">&#8599;</span></a>
+          <a class="row reveal" href="#awards"><span class="row__year">2026</span><div><h3>BPhO Senior Physics Challenge</h3><p>Gold Award</p></div><span class="row__arrow">&#8599;</span></a>
+        </div>
+      </section>
+
+      <section class="section container">
+        <div class="cta reveal">
+          <h2>Let's talk <em>engineering.</em></h2>
+          <p>Research collaborations, speakers for IGNITE, or just a conversation about EVs and F1.</p>
+          <div class="hero__actions">
+            <a class="btn btn--solid" href="mailto:Swamy-A-22@kcs.org.uk">Email me <span class="arrow">&#8599;</span></a>
+            <a class="btn btn--ghost" href="assets/Ashwin-Swamy-CV.pdf" target="_blank" rel="noopener">View resume</a>
+          </div>
+        </div>
+      </section>
     </div>
 
+    <!-- ======================= ABOUT ======================= -->
     <div class="view" id="about" data-title="About | Ashwin Swamy" hidden>
-    <section class="page-hero container">
-      <div class="waves" aria-hidden="true"></div>
-      <p class="eyebrow">01 / About</p>
-      <h1>Curious about how things work, and <em>why they fail.</em></h1>
-      <p class="lead">I'm in my final year of school (Year 13) at King's College School, Wimbledon, where I study the IB Diploma. I'm most interested in the space where physics, engineering and economics meet.</p>
-    </section>
+      <section class="page-hero container">
+        <p class="eyebrow fade-up">About</p>
+        <h1>
+          <span class="mask"><span style="--d:.1s">Curious about how</span></span>
+          <span class="mask"><span style="--d:.2s">things work, and <em>why</em></span></span>
+          <span class="mask"><span style="--d:.3s"><em>they fail.</em></span></span>
+        </h1>
+        <p class="lead fade-up" style="--d:.45s">I'm in my final year of school (Year 13) at King's College School, Wimbledon, where I study the IB Diploma. I'm most interested in the space where physics, engineering and economics meet.</p>
+      </section>
 
-
-    <section class="container section">
-      <h2 class="section__title">Education</h2>
-      <div class="grid-2">
-        <div class="card reveal">
-          <h3>King's College School, Wimbledon</h3>
-          <p class="meta">Year 13 (Grade 12), final year of Senior School &middot; 2022 to Present &middot; London</p>
-          <div style="margin-top:14px">
-            <div class="edu-row"><b>IB Diploma (Predicted)</b><span class="hl">45 / 45</span></div>
-            <div class="edu-row"><b>Higher Level</b><span>Mathematics AA, Physics, Chemistry</span></div>
-            <div class="edu-row"><b>Standard Level</b><span>Philosophy, Chinese, English</span></div>
-            <div class="edu-row"><b>SAT</b><span><span class="hl">1550</span> &middot; English 760 &middot; Maths 790</span></div>
-          </div>
-        </div>
-        <div class="card reveal">
-          <h3>(I)GCSEs</h3>
-          <p class="meta">11 grade 9s, one of 116 students in the UK</p>
-          <ul class="list">
-            <li>I scored 100% in Further Mathematics</li>
-            <li>I won the L6th Physics Prize, placing 1st out of a cohort of 100+ physics students</li>
-            <li>I came top of my year in the Year 12 IB exams, with 7s in every subject</li>
-          </ul>
-          <div class="chips">
-            <span class="tag">Mathematics</span><span class="tag">Further Maths</span><span class="tag">Physics</span>
-            <span class="tag">Chemistry</span><span class="tag">Biology</span><span class="tag">Computer Science</span>
-            <span class="tag">Geography</span><span class="tag">English Language</span><span class="tag">English Literature</span>
-            <span class="tag">Mandarin</span><span class="tag">French</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="container section">
-      <h2 class="section__title">Skills</h2>
-      <div class="grid-2">
-        <div class="card reveal">
-          <h3>Technical</h3>
-          <div class="chips">
-            <span class="tag tag--lime">CAD (Fusion 360)</span><span class="tag tag--lime">FEA</span>
-            <span class="tag">Python</span><span class="tag">JavaScript</span><span class="tag">HTML</span>
-            <span class="tag">3D Printing</span><span class="tag">Graphic Design</span><span class="tag">DaVinci Resolve</span>
-          </div>
-        </div>
-        <div class="card reveal">
-          <h3>Languages</h3>
-          <div style="margin-top:6px">
-            <div class="edu-row"><b>English</b><span>Native</span></div>
-            <div class="edu-row"><b>Tamil</b><span>Mother tongue</span></div>
-            <div class="edu-row"><b>French</b><span>Proficient</span></div>
-            <div class="edu-row"><b>Mandarin</b><span>Proficient</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="container section">
-      <h2 class="section__title">Beyond the lab</h2>
-      <div class="grid-3">
-        <div class="card interest reveal">
-          <h3>Taekwondo</h3>
-          <p>I compete at national level and won a team silver medal at the British Taekwondo National Championship in 2024.</p>
-        </div>
-        <div class="card interest reveal">
-          <h3>Music</h3>
-          <p>I produce my own music, play in a rock band and hold ABRSM Grade 7 Piano with Distinction.</p>
-        </div>
-        <div class="card interest reveal">
-          <h3>Formula 1</h3>
-          <p>F1 is where my interest in vehicle engineering started, and it still shapes how I think about chassis and performance.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="container section">
-      <div class="cta-band reveal">
-        <h2>Want to see what I've been building?</h2>
-        <a class="btn" href="#projects">See my projects &#8599;</a>
-      </div>
-    </section>
-    </div>
-
-    <div class="view" id="projects" data-title="Projects | Ashwin Swamy" hidden>
-    <section class="page-hero container">
-      <div class="waves" aria-hidden="true"></div>
-      <p class="eyebrow">02 / Projects</p>
-      <h1>Things I've designed, built <em>and argued for.</em></h1>
-      <p class="lead">My research and projects, from structural analysis on a real EV to a CanSat judged by ESA, to a question about who really controls money.</p>
-      <div class="jump">
-        <a class="btn btn--ghost" href="#ev-chassis">EV Chassis</a>
-        <a class="btn btn--ghost" href="#stratosat">StratoSat</a>
-        <a class="btn btn--ghost" href="#economics">Economics Research</a>
-      </div>
-    </section>
-
-    <section class="container section">
-      <article class="card entry reveal" id="ev-chassis">
-        <div class="entry__head">
-          <div>
-            <p class="eyebrow">Research &middot; 2025 to Present</p>
-            <h2>Payload Responsive EV Chassis</h2>
-            <p class="meta">With Accelo Mobility, an EV startup backed by SINE IIT Bombay</p>
-          </div>
-          <span class="tag tag--lime">Published</span>
-        </div>
-        <div class="entry__media entry__media--single">
-          <div class="ph "><span>CAD render of the semi spaceframe chassis</span><small>Image placeholder</small></div>
-        </div>
-        <div class="entry__body">
-          <div>
-            <h4>The problem</h4>
-            <p>I found a gap in commercial EV platforms. Most are retrofitted from petrol and diesel vehicles, and their rigid frames can't cope with loads that change at every delivery stop. That causes instability, faster wear and a real risk of battery fires.</p>
-          </div>
-          <div>
-            <h4>What I did</h4>
-            <p>I designed an optimised semi spaceframe chassis in CAD and ran more than 100 FEA iterations across the load conditions a delivery vehicle actually sees. I traded reinforcement against weld access and material cost so the design stays manufacturable and affordable in emerging markets.</p>
-          </div>
-          <div>
-            <h4>The outcome</h4>
-            <p>My design increased the safety factor by 4.6x over a ladder frame baseline. I'm working with Accelo Mobility to run it in a prototype EV delivery pickup. The research was published in the National High School Journal of Science, and I presented it at the Sigma Xi Student Research Conference.</p>
-          </div>
-        </div>
-        <div class="stats">
-          <div class="stat"><b>4.6&times;</b><span>Higher safety factor</span></div>
-          <div class="stat"><b>100+</b><span>FEA iterations</span></div>
-          <div class="stat"><b>~1%</b><span>Journal acceptance rate</span></div>
-          <div class="stat"><b>Sigma Xi</b><span>Research conference presenter</span></div>
-        </div>
-      </article>
-
-      <article class="card entry reveal" id="stratosat">
-        <div class="entry__head">
-          <div>
-            <p class="eyebrow">Competition &middot; 2025 to 2026</p>
-            <h2>StratoSat: UK CanSat Competition</h2>
-            <p class="meta">Run by ESA and ESERO UK</p>
-          </div>
-          <span class="tag tag--lime">Past UK Regionals</span>
-        </div>
-        <div class="entry__media entry__media--single">
-          <div class="ph "><span>StratoSat CanSat and team photo</span><small>Image placeholder</small></div>
-        </div>
-        <div class="entry__body">
-          <div>
-            <h4>My role</h4>
-            <p>I was Project Manager and Recovery System Lead. I led project planning and risk analysis, and wrote the design review documents we submitted to the ESA and ESERO judges.</p>
-          </div>
-          <div>
-            <h4>What I built</h4>
-            <p>I designed and built the recovery parachute from first principles, sizing the canopy area and measuring the opening shock loads myself. I also helped with the CAD and 3D printing of our PLA structure.</p>
-          </div>
-          <div>
-            <h4>The outcome</h4>
-            <p>Our team scored 100% in the Preliminary Design Review and 32 out of 34 in the Critical Design Review, and we made it past the UK regionals.</p>
-          </div>
-        </div>
-        <div class="stats">
-          <div class="stat"><b>100%</b><span>PDR score</span></div>
-          <div class="stat"><b>32/34</b><span>CDR score</span></div>
-          <div class="stat"><b>ESA</b><span>Judged competition</span></div>
-        </div>
-      </article>
-
-      <article class="card entry reveal" id="economics">
-        <div class="entry__head">
-          <div>
-            <p class="eyebrow">Independent Research &middot; 2025 to 2026</p>
-            <h2>Decentralised Finance and Payment Infrastructure</h2>
-            <p class="meta">Independent economics research</p>
-          </div>
-          <span class="tag tag--lime">John Locke Shortlist</span>
-        </div>
-        <div class="entry__body">
-          <div>
-            <h4>The question</h4>
-            <p>I wanted to know whether a cashless economy is risky in itself, or whether the risk depends on who controls the payment infrastructure.</p>
-          </div>
-          <div>
-            <h4>My argument</h4>
-            <p>I compared payment systems in India, China, Nigeria and Sweden, and argued that control is what matters. I then extended the analysis to stablecoins, looking at how money moving outside banks could weaken monetary policy and dollarise deposits in emerging markets.</p>
-          </div>
-          <div>
-            <h4>The outcome</h4>
-            <p>My essay was shortlisted for Economics at the 2026 John Locke Essay Competition.</p>
-          </div>
-        </div>
-        <div class="stats">
-          <div class="stat"><b>4</b><span>Countries compared</span></div>
-          <div class="stat"><b>2026</b><span>John Locke shortlist</span></div>
-        </div>
-      </article>
-    </section>
-
-    <section class="container section">
-      <div class="cta-band reveal">
-        <h2>See where I've put this into practice.</h2>
-        <a class="btn" href="#experience">My experience &#8599;</a>
-      </div>
-    </section>
-    </div>
-
-    <div class="view" id="experience" data-title="Experience | Ashwin Swamy" hidden>
-    <section class="page-hero container">
-      <div class="waves" aria-hidden="true"></div>
-      <p class="eyebrow">03 / Experience</p>
-      <h1>Learning from <em>real engineering teams.</em></h1>
-      <p class="lead">Work experience where I got to apply what I study, from platform strategy for a luxury carmaker to wiring the power system of an electric sea glider.</p>
-    </section>
-
-    <section class="container section">
-      <article class="card entry reveal">
-        <div class="entry__head">
-          <div>
-            <p class="eyebrow">Internship &middot; July 2026 &middot; London, UK</p>
-            <h2>Tech Mahindra</h2>
-            <p class="meta">Platform economics client project for Bentley Motors</p>
-          </div>
-          <span class="tag tag--lime">Client Report</span>
-        </div>
-        <div class="entry__body">
-          <div>
-            <h4>The brief</h4>
-            <p>I traced how a 42% fall in Bentley's operating profit was influenced by the cancellation of a shared chassis platform.</p>
-          </div>
-          <div>
-            <h4>My analysis</h4>
-            <p>I looked at how shared platforms fix suspension hard points and standardise aesthetics, which constrains the thing Bentley's customers value most. I benchmarked Bentley's platform strategy against peer OEMs.</p>
-          </div>
-          <div>
-            <h4>What I delivered</h4>
-            <p>I wrote a client report proposing volume linked platform charging as a better model for Bentley.</p>
-          </div>
-        </div>
-      </article>
-
-      <article class="card entry reveal">
-        <div class="entry__head">
-          <div>
-            <p class="eyebrow">Summer Work Experience &middot; July 2025 &middot; Rhode Island, USA</p>
-            <h2>REGENT Craft &amp; Defense</h2>
-            <p class="meta">An electric sea glider company</p>
-          </div>
-          <span class="tag tag--lime">Hands On</span>
-        </div>
-        <div class="entry__media entry__media--single">
-          <div class="ph "><span>Photo at REGENT or of the sea glider</span><small>Image placeholder</small></div>
-        </div>
-        <div class="entry__body">
-          <div>
-            <h4>Who I worked with</h4>
-            <p>I shadowed an Electrical Engineer working on REGENT's electric sea glider.</p>
-          </div>
-          <div>
-            <h4>What I did</h4>
-            <p>I got hands on experience installing a DC to DC converter system in a prototype sea glider, powering its avionics.</p>
-          </div>
-          <div>
-            <h4>What I took away</h4>
-            <p>[Placeholder: 1 to 2 lines on what I learned, for example how electrical systems are tested before they go into a prototype.]</p>
-          </div>
-        </div>
-      </article>
-    </section>
-
-    <section class="container section">
-      <div class="cta-band reveal">
-        <h2>Engineering is better with other people.</h2>
-        <a class="btn" href="#leadership">Leadership &#8599;</a>
-      </div>
-    </section>
-    </div>
-
-    <div class="view" id="leadership" data-title="Leadership | Ashwin Swamy" hidden>
-    <section class="page-hero container">
-      <div class="waves" aria-hidden="true"></div>
-      <p class="eyebrow">04 / Leadership</p>
-      <h1>Building things <em>for other people too.</em></h1>
-      <p class="lead">The initiatives I've started and led, both at school and in my community.</p>
-    </section>
-
-    <section class="container section">
-      <article class="card entry reveal">
-        <div class="entry__head">
-          <div>
-            <p class="eyebrow">Co-Founder &middot; 2022 to Present &middot; Roehampton Cricket Club</p>
-            <h2>Cricket4Life</h2>
-          </div>
-          <span class="tag tag--lime">Community</span>
-        </div>
-        <div class="entry__media entry__media--single">
-          <div class="ph "><span>Cricket4Life team photo</span><small>Image placeholder</small></div>
-        </div>
-        <div class="entry__body">
-          <div>
-            <h4>Why I started it</h4>
-            <p>When state support ended, my Afghan refugee teammates were dispersed across the UK. I co-founded Cricket4Life to help them stay connected and build a future through the sport.</p>
-          </div>
-          <div>
-            <h4>What I did</h4>
-            <p>I designed and ran a weekly English programme, with worksheets built on the Level 1 English qualification syllabus they needed to coach. I also co-led fundraising across 2 schools.</p>
-          </div>
-          <div>
-            <h4>The impact</h4>
-            <p>2 of my teammates are now employed as paid club cricket coaches, and we raised over &pound;1,000 plus cricket kit for coaching sessions and masterclasses.</p>
-          </div>
-        </div>
-        <div class="stats">
-          <div class="stat"><b>2</b><span>Teammates now paid coaches</span></div>
-          <div class="stat"><b>&pound;1,000+</b><span>Raised, plus kit</span></div>
-          <div class="stat"><b>2</b><span>Schools involved</span></div>
-        </div>
-      </article>
-
-      <article class="card entry reveal">
-        <div class="entry__head">
-          <div>
-            <p class="eyebrow">Founder &middot; 2025 to Present &middot; King's College School</p>
-            <h2>IGNITE Initiative</h2>
-          </div>
-          <span class="tag tag--lime">STEM Outreach</span>
-        </div>
-        <div class="entry__media entry__media--single">
-          <div class="ph "><span>IGNITE session with the BP speaker</span><small>Image placeholder</small></div>
-        </div>
-        <div class="entry__body">
-          <div>
-            <h4>The idea</h4>
-            <p>I founded IGNITE to connect students with engineering industry experts and make STEM career paths feel less mysterious.</p>
-          </div>
-          <div>
-            <h4>What I've run</h4>
-            <p>I directed a session with BP's Senior VP of Technology and Innovation, who works with Audi F1, for 50 students across 4 year groups. When our original speaker withdrew, I built a confirmed line up of 3 industry experts for the speaker series.</p>
-          </div>
-          <div>
-            <h4>What's next</h4>
-            <p>I'm building an international product design competition across partner schools in Bangkok, Monaco and the UK, judged by industry experts.</p>
-          </div>
-        </div>
-        <div class="stats">
-          <div class="stat"><b>50</b><span>Students at the first session</span></div>
-          <div class="stat"><b>3</b><span>Industry experts confirmed</span></div>
-          <div class="stat"><b>3</b><span>Countries in the competition</span></div>
-        </div>
-      </article>
-
-      <article class="card entry reveal">
-        <div class="entry__head">
-          <div>
-            <p class="eyebrow">2024 to Present &middot; King's College School</p>
-            <h2>Mirror Board and Aerospace &amp; Aviation Society</h2>
-          </div>
-          <span class="tag tag--lime">Student Governance</span>
-        </div>
-        <div class="entry__body">
-          <div>
-            <h4>Aerospace Society</h4>
-            <p>I co-founded the Aerospace &amp; Aviation Society after I noticed there was demand from Years 7 and 8 that nobody was meeting. I ran 13 sessions for 15 pupils.</p>
-          </div>
-          <div>
-            <h4>Mirror Board</h4>
-            <p>I was selected as 1 of 14 from 231 students for the Mirror Board, the school's highest student governance body, chaired by the Headmistress.</p>
-          </div>
-          <div>
-            <h4>The reform</h4>
-            <p>The struggles we had launching the society helped me diagnose why the clubs system was failing younger years. With the Head of Co-curricular, I passed a reform for 150 clubs: a simpler way to start a club, digital advertising for younger year groups, and club awards.</p>
-          </div>
-        </div>
-        <div class="stats">
-          <div class="stat"><b>1 of 14</b><span>Chosen from 231 students</span></div>
-          <div class="stat"><b>150</b><span>Clubs reformed</span></div>
-          <div class="stat"><b>13</b><span>Society sessions run</span></div>
-        </div>
-      </article>
-    </section>
-
-    <section class="container section">
-      <div class="cta-band reveal">
-        <h2>A few things I'm proud of.</h2>
-        <a class="btn" href="#awards">Awards &#8599;</a>
-      </div>
-    </section>
-    </div>
-
-    <div class="view" id="awards" data-title="Awards | Ashwin Swamy" hidden>
-    <section class="page-hero container">
-      <div class="waves" aria-hidden="true"></div>
-      <p class="eyebrow">05 / Awards</p>
-      <h1>Recognition <em>along the way.</em></h1>
-      <p class="lead">Competitions and certifications across physics, maths, economics, sport and music.</p>
-    </section>
-
-    <section class="container section">
-      <div class="stats reveal" style="margin-bottom:28px">
-        <div class="stat"><b>11</b><span>Grade 9 (I)GCSEs</span></div>
-        <div class="stat"><b>1st</b><span>L6th Physics Prize, of 100+ students</span></div>
-        <div class="stat"><b>45/45</b><span>Predicted IB score</span></div>
-        <div class="stat"><b>1550</b><span>SAT score</span></div>
-      </div>
-        <div class="award reveal">
-          <span class="award__year">2026</span>
-          <div><h3>BPhO Senior Physics Challenge</h3><p>I earned a Gold Award.</p></div>
-          <span class="tag">Physics</span>
-        </div>
-        <div class="award reveal">
-          <span class="award__year">2026</span>
-          <div><h3>John Locke Essay Competition</h3><p>My economics essay was shortlisted.</p></div>
-          <span class="tag">Economics</span>
-        </div>
-        <div class="award reveal">
-          <span class="award__year">2026</span>
-          <div><h3>British Science Association</h3><p>I achieved the CREST Gold Award.</p></div>
-          <span class="tag">Science</span>
-        </div>
-        <div class="award reveal">
-          <span class="award__year">2025</span>
-          <div><h3>UKMT Senior Mathematical Challenge</h3><p>I earned a Gold Award and qualified for the Senior Kangaroo.</p></div>
-          <span class="tag">Maths</span>
-        </div>
-        <div class="award reveal">
-          <span class="award__year">2024</span>
-          <div><h3>British Taekwondo National Championship</h3><p>I won a Team Silver Medal.</p></div>
-          <span class="tag">Sport</span>
-        </div>
-        <div class="award reveal">
-          <span class="award__year">2024</span>
-          <div><h3>ABRSM Piano Grade 7</h3><p>I passed with Distinction.</p></div>
-          <span class="tag">Music</span>
-        </div>
-        <div class="award reveal">
-          <span class="award__year">2023</span>
-          <div><h3>John Locke Essay Competition</h3><p>I was a Junior category finalist.</p></div>
-          <span class="tag">Writing</span>
-        </div>
-    </section>
-
-    <section class="container section">
-      <div class="cta-band reveal">
-        <h2>Let's talk engineering.</h2>
-        <a class="btn" href="#contact">Get in touch &#8599;</a>
-      </div>
-    </section>
-    </div>
-
-    <div class="view" id="contact" data-title="Contact | Ashwin Swamy" hidden>
-    <section class="page-hero container">
-      <div class="waves" aria-hidden="true"></div>
-      <p class="eyebrow">06 / Contact</p>
-      <h1>Let's build <em>something together.</em></h1>
-      <p class="lead">Whether it's a research collaboration, a speaker for IGNITE or just a conversation about EVs and F1, I'd love to hear from you.</p>
-    </section>
-
-    <section class="container section">
-      <div class="contact-grid">
-        <div class="card reveal">
-          <h3>Find me</h3>
-          <div style="margin-top:8px">
-            <a class="contact-line" href="mailto:Swamy-A-22@kcs.org.uk">
-              <span class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m3 7 9 6 9-6"/></svg></span>
-              <span><small>Email</small>Swamy-A-22@kcs.org.uk</span>
-            </a>
-            <a class="contact-line" href="tel:+447552807250">
-              <span class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span>
-              <span><small>Phone</small>+44 7552 807250</span>
-            </a>
-            <a class="contact-line" href="#">
-              <span class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 11v5M8 8v.01M12 16v-5M16 16v-3a2 2 0 0 0-4 0"/></svg></span>
-              <span><small>LinkedIn</small>[Add LinkedIn link]</span>
-            </a>
-            <a class="contact-line" href="#">
-              <span class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>
-              <span><small>My music</small>[Add Spotify or SoundCloud link]</span>
-            </a>
-            <div class="contact-line">
-              <span class="icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-              <span><small>Based in</small>London, United Kingdom</span>
+      <section class="section container">
+        <div class="section__head reveal"><div><p class="eyebrow">Education</p><h2>Where I study.</h2></div></div>
+        <div class="grid-2">
+          <div class="card reveal">
+            <h3>King's College School, Wimbledon</h3>
+            <p class="meta">Year 13, final year of Senior School &middot; Sep 2022 to Present &middot; London</p>
+            <div class="kv">
+              <div><b>IB Diploma, Higher Level</b><span>Mathematics AA, Physics, Chemistry</span></div>
+              <div><b>IB Diploma, Standard Level</b><span>Philosophy, Chinese, English</span></div>
+              <div><b>Year 12 IB exams</b><span class="hl">Top of year, 7s in all</span></div>
+              <div><b>SAT</b><span><span class="hl">1550</span> &middot; English 760 &middot; Maths 790</span></div>
             </div>
           </div>
-          <a class="btn btn--lime" style="margin-top:18px" href="assets/Ashwin-Swamy-CV.pdf" target="_blank" rel="noopener">Download my CV &#8599;</a>
+          <div class="card reveal" style="--d:.08s">
+            <h3>(I)GCSEs</h3>
+            <p class="meta">11 grade 9s, one of 116 students in the UK</p>
+            <ul class="list">
+              <li>I scored 100% in Further Mathematics</li>
+              <li>I won the L6th Physics Prize, placing 1st out of a cohort of 100+ physics students</li>
+            </ul>
+            <div class="chips">
+              <span class="tag">Mathematics</span><span class="tag">Further Maths</span><span class="tag">Physics</span>
+              <span class="tag">Chemistry</span><span class="tag">Biology</span><span class="tag">Computer Science</span>
+              <span class="tag">Geography</span><span class="tag">English Language</span><span class="tag">English Literature</span>
+              <span class="tag">Mandarin</span><span class="tag">French</span>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <div class="card reveal">
-          <h3>Send me a message</h3>
-          <!-- Connect this form to Formspree, Netlify Forms or similar by setting the action URL -->
-          <form class="form" style="margin-top:16px" action="#" method="post">
-            <label>Your name<input type="text" name="name" required /></label>
-            <label>Your email<input type="email" name="email" required /></label>
-            <label>Message<textarea name="message" rows="5" required></textarea></label>
-            <button class="btn btn--lime" type="submit">Send message &#8599;</button>
-          </form>
+      <section class="section container">
+        <div class="section__head reveal"><div><p class="eyebrow">Skills</p><h2>What I work with.</h2></div></div>
+        <div class="grid-2">
+          <div class="card reveal">
+            <h3>Technical</h3>
+            <div class="chips">
+              <span class="tag tag--accent">CAD (Fusion 360)</span><span class="tag tag--accent">FEA</span><span class="tag tag--accent">CFD</span>
+              <span class="tag">Python</span><span class="tag">JavaScript</span><span class="tag">HTML</span>
+              <span class="tag">3D Printing</span><span class="tag">Graphic Design</span><span class="tag">DaVinci Resolve</span>
+            </div>
+          </div>
+          <div class="card reveal" style="--d:.08s">
+            <h3>Languages</h3>
+            <div class="kv">
+              <div><b>English</b><span>Native</span></div>
+              <div><b>Tamil</b><span>Mother tongue</span></div>
+              <div><b>French</b><span>Proficient</span></div>
+              <div><b>Mandarin</b><span>Proficient</span></div>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
+      <section class="section container">
+        <div class="section__head reveal"><div><p class="eyebrow">Beyond the lab</p><h2>When I'm not <em>engineering.</em></h2></div></div>
+        <div class="grid-3">
+          <div class="card pcard reveal">
+            <div class="pcard__img"><img src="assets/img/taekwondo-2.jpg" alt="Ashwin competing at the British Taekwondo Nationals" loading="lazy" width="1600" height="1067" /></div>
+            <div class="pcard__body">
+              <h3>Taekwondo</h3>
+              <p>I'm a 2nd Dan black belt and national level athlete. I won Team Silver at the 2024 British Taekwondo National Poomsae Championships, and coach 12 juniors as an Assistant Coach at Putney Taekwondo Club.</p>
+            </div>
+          </div>
+          <div class="card pcard reveal" style="--d:.08s">
+            <div class="pcard__img"><img src="assets/img/piano.jpg" alt="A younger Ashwin playing a grand piano in concert" loading="lazy" width="1050" height="1400" style="object-position:center 60%" /></div>
+            <div class="pcard__body">
+              <h3>Music</h3>
+              <p>I'm a classical pianist with ABRSM Grade 7 Distinction and won the All Hong Kong Schools Music Festival. I also produce my own tracks and play in The 22s, a rock band that performed an original song live to 400+ people.</p>
+            </div>
+          </div>
+          <div class="card pcard reveal" style="--d:.16s">
+            <div class="pcard__img"><img src="assets/img/f1-car.jpg" alt="The Orca Racing F1 in Schools car" loading="lazy" width="1454" height="664" style="object-fit:contain;background:#c9c9c9" /></div>
+            <div class="pcard__body">
+              <h3>Formula 1</h3>
+              <p>F1 is where my interest in vehicle engineering started, and it still shapes how I think about chassis, aerodynamics and performance.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section container">
+        <div class="cta reveal">
+          <h2>Want to see what <em>I've built?</em></h2>
+          <p>From structural analysis on a real EV to a CanSat judged by ESA.</p>
+          <div class="hero__actions"><a class="btn btn--solid" href="#projects">See my projects <span class="arrow">&#8599;</span></a></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ======================= PROJECTS ======================= -->
+    <div class="view" id="projects" data-title="Projects | Ashwin Swamy" hidden>
+      <section class="page-hero container">
+        <p class="eyebrow fade-up">Projects</p>
+        <h1>
+          <span class="mask"><span style="--d:.1s">Things I've designed,</span></span>
+          <span class="mask"><span style="--d:.2s">built <em>and argued for.</em></span></span>
+        </h1>
+        <p class="lead fade-up" style="--d:.35s">My research and projects, from structural analysis on a real EV to a CanSat judged by ESA, to a question about who really controls money.</p>
+        <div class="jump fade-up" style="--d:.45s">
+          <a class="btn btn--ghost" href="#ev-chassis">EV Chassis</a>
+          <a class="btn btn--ghost" href="#stratosat">StratoSat</a>
+          <a class="btn btn--ghost" href="#f1inschools">F1 in Schools</a>
+          <a class="btn btn--ghost" href="#economics">Economics Research</a>
+        </div>
+      </section>
+
+      <section class="section container">
+        <article class="entry" id="ev-chassis">
+          <div class="entry__head reveal">
+            <div>
+              <p class="eyebrow">Research &middot; Nov 2025 to May 2026</p>
+              <h2>Payload Responsive EV Chassis</h2>
+              <p class="meta">Independent author, with Accelo Mobility, an EV startup backed by SINE IIT Bombay</p>
+            </div>
+            <span class="tag tag--accent">Published</span>
+          </div>
+          <div class="entry__media reveal">
+            <figure><img src="assets/img/chassis.jpg" alt="CAD render of the semi spaceframe chassis" loading="lazy" width="1340" height="898" /></figure>
+          </div>
+          <div class="entry__body reveal">
+            <div>
+              <h4>The problem</h4>
+              <p>I found a gap in commercial EV platforms. Most are retrofitted from petrol and diesel vehicles, and their rigid frames can't cope with loads that change at every delivery stop. That causes instability, faster wear and a real risk of battery fires.</p>
+            </div>
+            <div>
+              <h4>What I did</h4>
+              <p>I designed an optimised semi spaceframe chassis in CAD and ran more than 100 FEA iterations across the load conditions a delivery vehicle actually sees. I traded reinforcement against weld access and material cost so the design stays manufacturable and affordable in emerging markets.</p>
+            </div>
+            <div>
+              <h4>The outcome</h4>
+              <p>My design increased the safety factor by 4.6x over a ladder frame baseline. The research was published in the National High School Journal of Science, and I presented it at the Sigma Xi Student Research Conference.</p>
+            </div>
+          </div>
+          <div class="stats reveal">
+            <div class="stat"><b>4.6&times;</b><span>Higher safety factor</span></div>
+            <div class="stat"><b>100+</b><span>FEA iterations</span></div>
+            <div class="stat"><b>~1%</b><span>Journal acceptance rate</span></div>
+            <div class="stat"><b>Sigma Xi</b><span>Research conference presenter</span></div>
+          </div>
+        </article>
+
+        <article class="entry" id="stratosat">
+          <div class="entry__head reveal">
+            <div>
+              <p class="eyebrow">Competition &middot; Sep 2025 to Mar 2026</p>
+              <h2>StratoSat: UK CanSat Competition</h2>
+              <p class="meta">Project Manager and Recovery System Lead &middot; Run by ESA and ESERO UK</p>
+            </div>
+            <span class="tag tag--accent">Past UK Regionals</span>
+          </div>
+          <div class="entry__media entry__media--2 reveal">
+            <figure><img src="assets/img/cansat-parachute.jpg" alt="Marking out the parachute canopy" loading="lazy" width="1050" height="1400" /></figure>
+            <figure><img src="assets/img/cansat-pcb.jpg" alt="The StratoSat PCB" loading="lazy" width="1050" height="1400" /></figure>
+          </div>
+          <div class="entry__body reveal">
+            <div>
+              <h4>My role</h4>
+              <p>I was Project Manager and Recovery System Lead. I led project planning and risk analysis, and wrote the design review documents we submitted to the ESA and ESERO judges.</p>
+            </div>
+            <div>
+              <h4>What I built</h4>
+              <p>I designed and built the recovery parachute from first principles, sizing the canopy area and measuring the opening shock loads myself. I also helped with the CAD and 3D printing of our PLA structure.</p>
+            </div>
+            <div>
+              <h4>The outcome</h4>
+              <p>Our team scored 100% in the Preliminary Design Review and 32 out of 34 in the Critical Design Review, and we made it past the UK regionals.</p>
+            </div>
+          </div>
+          <div class="stats reveal">
+            <div class="stat"><b>100%</b><span>PDR score</span></div>
+            <div class="stat"><b>32/34</b><span>CDR score</span></div>
+            <div class="stat"><b>ESA</b><span>Judged competition</span></div>
+          </div>
+        </article>
+
+        <article class="entry" id="f1inschools">
+          <div class="entry__head reveal">
+            <div>
+              <p class="eyebrow">Competition &middot; Sep 2025 to Mar 2026</p>
+              <h2>F1 in Schools: Orca Racing</h2>
+              <p class="meta">Team Leader and Aerodynamics Lead</p>
+            </div>
+            <span class="tag tag--accent">Team Leader</span>
+          </div>
+          <div class="entry__media reveal">
+            <figure class="contain"><img src="assets/img/f1-car.jpg" alt="The finished Orca Racing car" loading="lazy" width="1454" height="664" /></figure>
+          </div>
+          <div class="entry__body reveal">
+            <div>
+              <h4>My role</h4>
+              <p>I led the Orca Racing team and owned the aerodynamics of our car.</p>
+            </div>
+            <div>
+              <h4>What I did</h4>
+              <p>I developed the full aerodynamic concept in CAD through iterative CFD analysis, all within the technical regulations.</p>
+            </div>
+            <div>
+              <h4>The outcome</h4>
+              <p>I built our engineering portfolio and helped deliver the technical presentations to the judges. We also secured corporate sponsorship for the team.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="entry" id="economics">
+          <div class="entry__head reveal">
+            <div>
+              <p class="eyebrow">Independent Research &middot; 2025 to 2026</p>
+              <h2>Decentralised Finance and Payment Infrastructure</h2>
+              <p class="meta">Independent economics research</p>
+            </div>
+            <span class="tag tag--accent">John Locke Commendation</span>
+          </div>
+          <div class="entry__body reveal">
+            <div>
+              <h4>The question</h4>
+              <p>I wanted to know whether a cashless economy is risky in itself, or whether the risk depends on who controls the payment infrastructure.</p>
+            </div>
+            <div>
+              <h4>My argument</h4>
+              <p>I compared payment systems in India, China, Nigeria and Sweden, and argued that control is what matters. I then extended the analysis to stablecoins, looking at how money moving outside banks could weaken monetary policy and dollarise deposits in emerging markets.</p>
+            </div>
+            <div>
+              <h4>The outcome</h4>
+              <p>My essay received a Commendation in Economics at the 2026 John Locke Essay Competition.</p>
+            </div>
+          </div>
+          <div class="stats reveal">
+            <div class="stat"><b>4</b><span>Countries compared</span></div>
+            <div class="stat"><b>2026</b><span>John Locke Commendation</span></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section container">
+        <div class="cta reveal">
+          <h2>See where I've put this <em>into practice.</em></h2>
+          <div class="hero__actions" style="margin-top:30px"><a class="btn btn--solid" href="#experience">My experience <span class="arrow">&#8599;</span></a></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ======================= EXPERIENCE ======================= -->
+    <div class="view" id="experience" data-title="Experience | Ashwin Swamy" hidden>
+      <section class="page-hero container">
+        <p class="eyebrow fade-up">Experience</p>
+        <h1>
+          <span class="mask"><span style="--d:.1s">Learning from</span></span>
+          <span class="mask"><span style="--d:.2s"><em>real engineering teams.</em></span></span>
+        </h1>
+        <p class="lead fade-up" style="--d:.35s">Work where I got to apply what I study, from chassis development at an EV startup to platform strategy for a luxury carmaker and the power system of an electric sea glider.</p>
+      </section>
+
+      <section class="section container">
+        <article class="entry">
+          <div class="entry__head reveal">
+            <div>
+              <p class="eyebrow">May 2024 to Present</p>
+              <h2>Accelo Mobility</h2>
+              <p class="meta">Mechanical Engineering and Chassis Developer &middot; EV startup backed by SINE IIT Bombay</p>
+            </div>
+            <span class="tag tag--accent">Engineering</span>
+          </div>
+          <div class="entry__body reveal">
+            <div>
+              <h4>The work</h4>
+              <p>I develop chassis designs for Accelo's commercial EVs, balancing structural performance against what can actually be built.</p>
+            </div>
+            <div>
+              <h4>What I did</h4>
+              <p>I weighed torsional stiffness against Accelo's material cost targets and weld access, so the chassis stays easy to manufacture and affordable.</p>
+            </div>
+            <div>
+              <h4>The impact</h4>
+              <p>I cut chassis cost by 5 per cent, and the design is used across 50+ vehicles.</p>
+            </div>
+          </div>
+          <div class="stats reveal">
+            <div class="stat"><b>5%</b><span>Chassis cost reduction</span></div>
+            <div class="stat"><b>50+</b><span>Vehicles using the design</span></div>
+          </div>
+        </article>
+
+        <article class="entry">
+          <div class="entry__head reveal">
+            <div>
+              <p class="eyebrow">Internship &middot; July 2026 &middot; London, UK</p>
+              <h2>Tech Mahindra</h2>
+              <p class="meta">Platform economics client project for Bentley Motors</p>
+            </div>
+            <span class="tag tag--accent">Client Report</span>
+          </div>
+          <div class="entry__body reveal">
+            <div>
+              <h4>The brief</h4>
+              <p>I analysed Bentley's commercial strategy for sharing a car platform with Porsche, and how the cancellation of a shared chassis platform affected its operating profit.</p>
+            </div>
+            <div>
+              <h4>My analysis</h4>
+              <p>I looked at how shared platforms fix suspension hard points and standardise aesthetics, which constrains the thing Bentley's customers value most. I benchmarked Bentley's platform strategy against peer OEMs.</p>
+            </div>
+            <div>
+              <h4>What I delivered</h4>
+              <p>I wrote a client report proposing a new pricing model based on production volume, to help decide when sharing car platforms is profitable.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="entry">
+          <div class="entry__head reveal">
+            <div>
+              <p class="eyebrow">Summer Work Experience &middot; July 2025 &middot; Rhode Island, USA</p>
+              <h2>REGENT Craft &amp; Defense</h2>
+              <p class="meta">An electric sea glider company</p>
+            </div>
+            <span class="tag tag--accent">Hands On</span>
+          </div>
+          <div class="entry__media reveal">
+            <figure><img src="assets/img/regent.jpg" alt="The REGENT sea glider prototype in its hangar" loading="lazy" width="1050" height="1400" style="object-position:center 45%" /></figure>
+          </div>
+          <div class="entry__body reveal">
+            <div>
+              <h4>Who I worked with</h4>
+              <p>I worked alongside an Electrical Engineer on REGENT's electric sea glider prototype.</p>
+            </div>
+            <div>
+              <h4>What I did</h4>
+              <p>I helped build and test the DC to DC converter that powers the sea glider's avionics.</p>
+            </div>
+            <div>
+              <h4>Hands on</h4>
+              <p>I wired the converter, bench tested it, and installed it on the physical airframe.</p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section container">
+        <div class="cta reveal">
+          <h2>Engineering is better <em>with other people.</em></h2>
+          <div class="hero__actions" style="margin-top:30px"><a class="btn btn--solid" href="#leadership">Leadership <span class="arrow">&#8599;</span></a></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ======================= LEADERSHIP ======================= -->
+    <div class="view" id="leadership" data-title="Leadership | Ashwin Swamy" hidden>
+      <section class="page-hero container">
+        <p class="eyebrow fade-up">Leadership</p>
+        <h1>
+          <span class="mask"><span style="--d:.1s">Building things</span></span>
+          <span class="mask"><span style="--d:.2s"><em>for other people too.</em></span></span>
+        </h1>
+        <p class="lead fade-up" style="--d:.35s">The initiatives I've started and led, both at school and in my community.</p>
+      </section>
+
+      <section class="section container">
+        <article class="entry">
+          <div class="entry__head reveal">
+            <div>
+              <p class="eyebrow">Co-Founder &middot; May 2023 to Present &middot; Roehampton Cricket Club</p>
+              <h2>Cricket4Life</h2>
+            </div>
+            <span class="tag tag--accent">Community</span>
+          </div>
+          <div class="entry__media reveal">
+            <figure><img src="assets/img/cricket4life.jpg" alt="Cricket4Life kit donation" loading="lazy" width="1050" height="1400" style="object-position:center 40%" /></figure>
+          </div>
+          <div class="entry__body reveal">
+            <div>
+              <h4>Why I started it</h4>
+              <p>When state support ended, my Afghan refugee teammates were dispersed across the UK. I co-founded Cricket4Life to help them stay connected and build a future through the sport.</p>
+            </div>
+            <div>
+              <h4>What I did</h4>
+              <p>I designed and ran a weekly English programme, with worksheets built on the Level 1 English qualification syllabus they needed to coach.</p>
+            </div>
+            <div>
+              <h4>The impact</h4>
+              <p>2 of my teammates are now employed as paid club cricket coaches, and we raised &pound;1,000+ worth of cricket kit for their coaching sessions.</p>
+            </div>
+          </div>
+          <div class="stats reveal">
+            <div class="stat"><b>2</b><span>Teammates now paid coaches</span></div>
+            <div class="stat"><b>&pound;1,000+</b><span>Of cricket kit raised</span></div>
+          </div>
+        </article>
+
+        <article class="entry">
+          <div class="entry__head reveal">
+            <div>
+              <p class="eyebrow">Founder &middot; Sep 2025 to Present &middot; King's College School</p>
+              <h2>IGNITE Initiative</h2>
+            </div>
+            <span class="tag tag--accent">STEM Outreach</span>
+          </div>
+          <div class="entry__media reveal">
+            <figure><img src="assets/img/ignite.jpg" alt="Ashwin hosting the IGNITE session with BP's Senior VP" loading="lazy" width="1050" height="1400" style="object-position:center 35%" /></figure>
+          </div>
+          <div class="entry__body reveal">
+            <div>
+              <h4>The idea</h4>
+              <p>I founded IGNITE, a design and innovation initiative, to connect students with engineering industry experts and make STEM career paths feel less mysterious.</p>
+            </div>
+            <div>
+              <h4>What I've run</h4>
+              <p>I directed a session with BP's Senior VP of Technology and Innovation, who works with Audi F1, for 50 students across 4 year groups. When our original speaker withdrew, I built a confirmed line up of 3 industry experts for the speaker series.</p>
+            </div>
+            <div>
+              <h4>What's next</h4>
+              <p>I'm building an international product design competition across partner schools in Bangkok, Monaco and the UK, judged by industry experts.</p>
+            </div>
+          </div>
+          <div class="stats reveal">
+            <div class="stat"><b>50</b><span>Students at the first session</span></div>
+            <div class="stat"><b>3</b><span>Industry experts confirmed</span></div>
+            <div class="stat"><b>3</b><span>Countries in the competition</span></div>
+          </div>
+        </article>
+
+        <article class="entry">
+          <div class="entry__head reveal">
+            <div>
+              <p class="eyebrow">Dec 2024 to Present &middot; King's College School</p>
+              <h2>Mirror Board and Aerospace &amp; Aviation Society</h2>
+            </div>
+            <span class="tag tag--accent">Student Governance</span>
+          </div>
+          <div class="entry__body reveal">
+            <div>
+              <h4>Aerospace Society</h4>
+              <p>I co-founded the Aerospace &amp; Aviation Society after I noticed demand from Years 7 and 8 that nobody was meeting. I ran 13 sessions for 15 pupils.</p>
+            </div>
+            <div>
+              <h4>Mirror Board</h4>
+              <p>I was selected as 1 of 14 from 231 students for the Mirror Board, the school's highest student governance body, chaired by the Headmistress.</p>
+            </div>
+            <div>
+              <h4>The reform</h4>
+              <p>With the Head of Co-curricular, I passed a reform for 150 clubs: a simpler way to start a club, digital advertising for younger year groups, and club awards.</p>
+            </div>
+          </div>
+          <div class="stats reveal">
+            <div class="stat"><b>1 of 14</b><span>Chosen from 231 students</span></div>
+            <div class="stat"><b>150</b><span>Clubs reformed</span></div>
+            <div class="stat"><b>13</b><span>Society sessions run</span></div>
+          </div>
+        </article>
+
+        <article class="entry">
+          <div class="entry__head reveal">
+            <div>
+              <p class="eyebrow">Sep 2025 to Present &middot; King's College School</p>
+              <h2>Science Mentor, Community Projects</h2>
+            </div>
+            <span class="tag tag--accent">Teaching</span>
+          </div>
+          <div class="entry__body reveal">
+            <div>
+              <h4>What I do</h4>
+              <p>I plan and deliver weekly interactive science lessons for gifted Year 5 and 6 students.</p>
+            </div>
+            <div>
+              <h4>Who it reaches</h4>
+              <p>40 students from 10 under resourced local schools.</p>
+            </div>
+          </div>
+          <div class="stats reveal">
+            <div class="stat"><b>40</b><span>Students taught weekly</span></div>
+            <div class="stat"><b>10</b><span>Local schools</span></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section container">
+        <div class="cta reveal">
+          <h2>A few things <em>I'm proud of.</em></h2>
+          <div class="hero__actions" style="margin-top:30px"><a class="btn btn--solid" href="#awards">Awards <span class="arrow">&#8599;</span></a></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ======================= AWARDS ======================= -->
+    <div class="view" id="awards" data-title="Awards | Ashwin Swamy" hidden>
+      <section class="page-hero container">
+        <p class="eyebrow fade-up">Awards</p>
+        <h1>
+          <span class="mask"><span style="--d:.1s">Recognition</span></span>
+          <span class="mask"><span style="--d:.2s"><em>along the way.</em></span></span>
+        </h1>
+        <p class="lead fade-up" style="--d:.35s">Competitions and certifications across physics, maths, economics, sport and music.</p>
+      </section>
+
+      <section class="section--tight container">
+        <div class="numbers reveal">
+          <div class="number"><b data-count="11">11</b><span>Grade 9 (I)GCSEs</span></div>
+          <div class="number"><b>1st</b><span>L6th Physics Prize, of 100+</span></div>
+          <div class="number"><b>7s</b><span>In all Year 12 IB exams</span></div>
+          <div class="number"><b data-count="1550">1550</b><span>SAT score</span></div>
+        </div>
+      </section>
+
+      <section class="section container">
+        <div class="awards">
+          <div class="award reveal"><span class="award__year">2026</span><div><h3>BPhO Senior Physics Challenge</h3><p>Gold Award</p></div><span class="tag">Physics</span></div>
+          <div class="award reveal"><span class="award__year">2026</span><div><h3>John Locke Essay Competition</h3><p>Commendation in Economics</p></div><span class="tag">Economics</span></div>
+          <div class="award reveal"><span class="award__year">2026</span><div><h3>British Science Association</h3><p>CREST Gold Award</p></div><span class="tag">Science</span></div>
+          <div class="award reveal"><span class="award__year">2025</span><div><h3>UKMT Senior Mathematical Challenge</h3><p>Gold Award, qualified for the Senior Kangaroo</p></div><span class="tag">Maths</span></div>
+          <div class="award reveal"><span class="award__year">2024</span><div><h3>British Taekwondo National Championship</h3><p>Team Silver Medal</p></div><span class="tag">Sport</span></div>
+          <div class="award reveal"><span class="award__year">2024</span><div><h3>ABRSM Piano Grade 7</h3><p>Distinction</p></div><span class="tag">Music</span></div>
+          <div class="award reveal"><span class="award__year">2023</span><div><h3>John Locke Essay Competition</h3><p>Junior category finalist</p></div><span class="tag">Writing</span></div>
+        </div>
+      </section>
+
+      <section class="section container">
+        <div class="cta reveal">
+          <h2>Let's talk <em>engineering.</em></h2>
+          <div class="hero__actions" style="margin-top:30px"><a class="btn btn--solid" href="#contact">Get in touch <span class="arrow">&#8599;</span></a></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ======================= CONTACT ======================= -->
+    <div class="view" id="contact" data-title="Contact | Ashwin Swamy" hidden>
+      <section class="page-hero container">
+        <p class="eyebrow fade-up">Contact</p>
+        <h1>
+          <span class="mask"><span style="--d:.1s">Let's build</span></span>
+          <span class="mask"><span style="--d:.2s"><em>something together.</em></span></span>
+        </h1>
+        <p class="lead fade-up" style="--d:.35s">Whether it's a research collaboration, a speaker for IGNITE or just a conversation about EVs and F1, I'd love to hear from you.</p>
+      </section>
+
+      <section class="section container">
+        <div class="contact-grid">
+          <div class="card reveal">
+            <h3>Find me</h3>
+            <div style="margin-top:8px">
+              <a class="contact-line" href="mailto:Swamy-A-22@kcs.org.uk">
+                <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m3 7 9 6 9-6"/></svg></span>
+                <span><small>Email</small>Swamy-A-22@kcs.org.uk</span>
+              </a>
+              <a class="contact-line" href="tel:+447552807250">
+                <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span>
+                <span><small>Phone</small>+44 7552 807250</span>
+              </a>
+              <div class="contact-line">
+                <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+                <span><small>Based in</small>London, United Kingdom</span>
+              </div>
+            </div>
+            <a class="btn btn--solid" style="margin-top:18px" href="assets/Ashwin-Swamy-CV.pdf" target="_blank" rel="noopener">Download my CV <span class="arrow">&#8599;</span></a>
+          </div>
+
+          <div class="card reveal" style="--d:.08s">
+            <h3>Send me a message</h3>
+            <!-- Opens the visitor's email app with the message filled in -->
+            <form class="form" data-mailto="Swamy-A-22@kcs.org.uk">
+              <label>Your name<input type="text" name="name" required /></label>
+              <label>Your email<input type="email" name="email" required /></label>
+              <label>Message<textarea name="message" rows="5" required></textarea></label>
+              <button class="btn btn--solid" type="submit">Send message <span class="arrow">&#8599;</span></button>
+            </form>
+          </div>
+        </div>
+      </section>
     </div>
   </main>
 
@@ -948,42 +1140,92 @@ ul { list-style: none; }
     </div>
   </footer>
   <script>
-// Mobile navigation toggle
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// Intro curtain: plays once per visit, then the page animates in
+const intro = document.querySelector(".intro");
+let seenIntro = false;
+try { seenIntro = sessionStorage.getItem("introSeen") === "1"; } catch (e) {}
+function startPage() {
+  document.body.classList.remove("is-loading");
+  setTimeout(() => document.querySelector(".stack")?.classList.add("is-settled"), 2200);
+}
+if (!intro || seenIntro || reduceMotion) {
+  intro && intro.remove();
+  startPage();
+} else {
+  setTimeout(() => {
+    intro.classList.add("is-done");
+    startPage();
+    try { sessionStorage.setItem("introSeen", "1"); } catch (e) {}
+    setTimeout(() => intro.remove(), 1100);
+  }, 1300);
+}
+
+// Navigation: mobile toggle, scrolled state, sliding active pill
 const nav = document.querySelector(".nav");
 const toggle = document.querySelector(".nav__toggle");
-if (nav && toggle) {
-  toggle.addEventListener("click", () => {
-    const open = nav.classList.toggle("is-open");
-    toggle.setAttribute("aria-expanded", open);
-  });
-}
-
-// Decorative wave lines (top right corner, like the reference design)
-document.querySelectorAll(".waves").forEach((el) => {
-  let paths = "";
-  for (let i = 0; i < 22; i++) {
-    const y = 10 + i * 13;
-    paths += `<path d="M ${60 + i * 8} 0 C ${180 + i * 6} ${y}, ${260 - i * 4} ${y + 120}, 460 ${40 + i * 12}" />`;
-  }
-  el.innerHTML = `<svg viewBox="0 0 460 320" fill="none" stroke="#6b6b5a" stroke-width="0.8">${paths}</svg>`;
+const pill = document.querySelector(".nav__pill");
+toggle.addEventListener("click", () => {
+  const open = nav.classList.toggle("is-open");
+  toggle.setAttribute("aria-expanded", open);
 });
+window.addEventListener("scroll", () => nav.classList.toggle("is-scrolled", window.scrollY > 10), { passive: true });
+
+function movePill() {
+  const active = document.querySelector(".nav__links a.is-active");
+  if (!active || !pill) return;
+  pill.style.width = active.offsetWidth + "px";
+  pill.style.transform = `translateX(${active.offsetLeft}px)`;
+  pill.style.opacity = 1;
+}
+window.addEventListener("resize", movePill);
+window.addEventListener("load", movePill);
+if ("ResizeObserver" in window) new ResizeObserver(movePill).observe(document.querySelector(".nav__links"));
 
 // Reveal elements on scroll
-const reveals = document.querySelectorAll(".reveal");
-if ("IntersectionObserver" in window) {
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.12 });
-  reveals.forEach((el) => io.observe(el));
-} else {
-  reveals.forEach((el) => el.classList.add("is-visible"));
+const io = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
+  });
+}, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }) : null;
+document.querySelectorAll(".reveal").forEach((el) => (io ? io.observe(el) : el.classList.add("is-visible")));
+
+// Count up numbers when they scroll into view
+function countUp(el) {
+  const end = parseFloat(el.dataset.count);
+  const dec = parseInt(el.dataset.decimals || "0", 10);
+  const suffix = el.dataset.suffix || "";
+  if (reduceMotion) return;
+  const start = performance.now();
+  const dur = 1400;
+  (function tick(now) {
+    const p = Math.min((now - start) / dur, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = (end * eased).toFixed(dec) + suffix;
+    if (p < 1) requestAnimationFrame(tick);
+  })(start);
 }
+const countIo = "IntersectionObserver" in window ? new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) { countUp(e.target); countIo.unobserve(e.target); }
+  });
+}, { threshold: 0.6 }) : null;
+document.querySelectorAll("[data-count]").forEach((el) => countIo && countIo.observe(el));
+
+// Contact form opens an email with the message filled in
+document.querySelectorAll("form[data-mailto]").forEach((form) => {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const d = new FormData(form);
+    const subject = `Message from ${d.get("name")}`;
+    const body = `${d.get("message")}\n\n${d.get("name")}\n${d.get("email")}`;
+    location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+});
 
 // Footer year
 document.querySelectorAll("[data-year]").forEach((el) => (el.textContent = new Date().getFullYear()));
-
 
 // Single page router: each nav item shows its own page
 const views = [...document.querySelectorAll(".view")];
@@ -992,19 +1234,21 @@ function route() {
   const hash = decodeURIComponent(location.hash.slice(1)) || "home";
   const target = document.getElementById(hash);
   const view = (target && target.closest(".view")) || document.getElementById("home");
+  const changed = view.hidden;
   views.forEach((v) => (v.hidden = v !== view));
   navLinks.forEach((a) => a.classList.toggle("is-active", a.dataset.nav === view.id));
+  movePill();
   document.title = view.dataset.title;
-  nav && nav.classList.remove("is-open");
+  nav.classList.remove("is-open");
+  toggle.setAttribute("aria-expanded", false);
   if (target && target !== view) {
-    requestAnimationFrame(() => target.scrollIntoView({ behavior: "smooth", block: "start" }));
+    requestAnimationFrame(() => target.scrollIntoView({ behavior: changed ? "auto" : "smooth", block: "start" }));
   } else {
     window.scrollTo(0, 0);
   }
 }
 window.addEventListener("hashchange", route);
 route();
-
   </script>
 </body>
 </html>
